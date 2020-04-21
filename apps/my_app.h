@@ -27,6 +27,7 @@ class MyApp : public cinder::app::App {
   cinder::gl::Texture2dRef hundred_chip_Texture;
   cinder::gl::Texture2dRef thousand_chip_Texture;
   cinder::gl::Texture2dRef ten_chip_Texture;
+  cinder::gl::Texture2dRef max_chip_Texture;
   
   void DrawGameState();
   void DrawGameButtons();
@@ -34,6 +35,7 @@ class MyApp : public cinder::app::App {
   int balance = 1000;
   int current_bet = 0;
   void bet(int i);
+  void ResetBalance();
 };
 
 }  // namespace myapp

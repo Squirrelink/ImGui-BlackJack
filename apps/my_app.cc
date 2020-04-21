@@ -56,6 +56,7 @@ void MyApp::LoadImages() {
   ten_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "10.png" )));
   hundred_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "100.png" )));
   thousand_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "1000.png" )));
+  max_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "max.png" )));
 }
 void MyApp::DrawGameState() {
   cinder::gl::draw(background_Texture);
@@ -78,8 +79,7 @@ void MyApp::DrawGameButtons() {
 void MyApp::DrawStartGameButtons() {
   ui::Button("Place Bet");
   if (ui::Button("Reset Bet")) {
-    balance+= current_bet;
-    current_bet = 0;
+    ResetBalance();
   }
   if (ui::ImageButton(one_chip_Texture,one_chip_Texture->getSize())) {
     bet(1);
@@ -93,6 +93,9 @@ void MyApp::DrawStartGameButtons() {
   if (ui::ImageButton(thousand_chip_Texture,thousand_chip_Texture->getSize())) {
     bet(1000);
   }
+  if (ui::ImageButton(max_chip_Texture,max_chip_Texture->getSize())) {
+    bet(balance);
+  }
 }
 
 std::string MyApp::BetToString(int value) { 
@@ -103,6 +106,10 @@ std::string MyApp::BetToString(int value) {
 void MyApp::bet(int value) {
   current_bet += value;
   balance -= value;
+}
+void MyApp::ResetBalance() {
+  balance+= current_bet;
+  current_bet = 0;
 }
 
 }  // namespace myapp
