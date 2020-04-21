@@ -6,8 +6,7 @@
 namespace mylibrary {
 class Engine {
  public:
-  int balance = 1000;
-  int current_bet = 0;
+  
 };
 
 }  // namespace mylibrary

@@ -4,5 +4,7 @@
 
 namespace mylibrary {
  
-  
+  void apple() {
+    
+  }
 }  // namespace mylibrary
