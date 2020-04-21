@@ -60,8 +60,12 @@ void MyApp::LoadImages() {
 void MyApp::DrawGameState() {
   cinder::gl::draw(background_Texture);
   cinder::gl::draw(deck_Texture);
-  
+  std::string balText = "Balance: " + BetToString(balance);
+  std::string betText = "Current Bet: " + BetToString(current_bet);
+  ui::Text(balText.c_str());
+  ui::Text(betText.c_str());
 }
+
 void MyApp::DrawGameButtons() {
   ui::Button("HIT");
   ui::Button("STAND");
@@ -70,12 +74,19 @@ void MyApp::DrawGameButtons() {
   ui::Button("1000");
   ui::Button("MAX");
 }
+
 void MyApp::DrawStartGameButtons() {
   ui::Button("Place Bet");
   ui::ImageButton(one_chip_Texture,one_chip_Texture->getSize());
   ui::ImageButton(ten_chip_Texture,ten_chip_Texture->getSize());
   ui::ImageButton(hundred_chip_Texture,hundred_chip_Texture->getSize());
   ui::ImageButton(thousand_chip_Texture,thousand_chip_Texture->getSize());
+}
+
+std::string MyApp::BetToString(int value) { 
+  std::stringstream ss;
+  ss << value;
+  return ss.str();
 }
 
 }  // namespace myapp

@@ -18,6 +18,7 @@ class MyApp : public cinder::app::App {
   void keyDown(cinder::app::KeyEvent) override;
   void MenuButton();
   void LoadImages();
+  std::string BetToString(int value);
   bool inMenu;
   bool inGame;
   cinder::gl::Texture2dRef background_Texture;
