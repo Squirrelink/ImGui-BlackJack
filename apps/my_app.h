@@ -4,7 +4,8 @@
 #define FINALPROJECT_APPS_MYAPP_H_
 
 #include <cinder/app/App.h>
-
+#include <cinder/gl/Shader.h>
+#include <cinder/gl/Texture.h>
 
 namespace myapp {
 
@@ -15,6 +16,13 @@ class MyApp : public cinder::app::App {
   void update() override;
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
+  void MenuButton();
+  void LoadImages();
+  bool inMenu;
+  bool inGame;
+  cinder::gl::Texture2dRef background;
+  void DrawGameState();
+  void DrawGameButtons();
 };
 
 }  // namespace myapp
