@@ -32,10 +32,13 @@ void MyApp::draw() {
   if (inMenu) {
     MenuButton();
   }
-  if (inGame) {
+  if (inGame && isBetting) {
     DrawGameState();
     DrawStartGameButtons();
-//    DrawGameButtons();
+  }
+  if (inGame && !isBetting) {
+    DrawGameState();
+    DrawGameButtons();
   }
   ImGui::End();
 }
@@ -47,6 +50,7 @@ void MyApp::MenuButton() {
   if (ui::Button( "Start Game" )) {
     inMenu = false;
     inGame = true;
+    isBetting = true;
   }
 }
 void MyApp::LoadImages() {
@@ -70,14 +74,12 @@ void MyApp::DrawGameState() {
 void MyApp::DrawGameButtons() {
   ui::Button("HIT");
   ui::Button("STAND");
-  ui::Button("10");
-  ui::Button("100");
-  ui::Button("1000");
-  ui::Button("MAX");
 }
 
 void MyApp::DrawStartGameButtons() {
-  ui::Button("Place Bet");
+  if (ui::Button("Place Bet")) {
+    isBetting = false;
+  }
   if (ui::Button("Reset Bet")) {
     ResetBalance();
   }
@@ -104,6 +106,9 @@ std::string MyApp::BetToString(int value) {
   return ss.str();
 }
 void MyApp::bet(int value) {
+  if (value > balance) {
+    return;
+  }
   current_bet += value;
   balance -= value;
 }
