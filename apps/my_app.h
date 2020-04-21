@@ -33,6 +33,7 @@ class MyApp : public cinder::app::App {
   void DrawStartGameButtons();
   int balance = 1000;
   int current_bet = 0;
+  void bet(int i);
 };
 
 }  // namespace myapp

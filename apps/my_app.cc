@@ -77,16 +77,32 @@ void MyApp::DrawGameButtons() {
 
 void MyApp::DrawStartGameButtons() {
   ui::Button("Place Bet");
-  ui::ImageButton(one_chip_Texture,one_chip_Texture->getSize());
-  ui::ImageButton(ten_chip_Texture,ten_chip_Texture->getSize());
-  ui::ImageButton(hundred_chip_Texture,hundred_chip_Texture->getSize());
-  ui::ImageButton(thousand_chip_Texture,thousand_chip_Texture->getSize());
+  if (ui::Button("Reset Bet")) {
+    balance+= current_bet;
+    current_bet = 0;
+  }
+  if (ui::ImageButton(one_chip_Texture,one_chip_Texture->getSize())) {
+    bet(1);
+  }
+  if (ui::ImageButton(ten_chip_Texture,ten_chip_Texture->getSize())) {
+    bet(10);
+  }
+  if (ui::ImageButton(hundred_chip_Texture,hundred_chip_Texture->getSize())) {
+    bet(100);
+  }
+  if (ui::ImageButton(thousand_chip_Texture,thousand_chip_Texture->getSize())) {
+    bet(1000);
+  }
 }
 
 std::string MyApp::BetToString(int value) { 
   std::stringstream ss;
   ss << value;
   return ss.str();
+}
+void MyApp::bet(int value) {
+  current_bet += value;
+  balance -= value;
 }
 
 }  // namespace myapp
