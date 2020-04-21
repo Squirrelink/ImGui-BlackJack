@@ -23,8 +23,6 @@ void MyApp::setup() {
 }
 
 void MyApp::update() {
-  
- 
 }
 
 void MyApp::draw() {
@@ -45,7 +43,7 @@ void MyApp::draw() {
 void MyApp::keyDown(KeyEvent event) { }
 void MyApp::MenuButton() {
   
-  if (ui::Button( "MyButton" )) {
+  if (ui::Button( "Start Game" )) {
     inMenu = false;
     inGame = true;
   }
@@ -57,7 +55,12 @@ void MyApp::DrawGameState() {
   cinder::gl::draw(background);
 }
 void MyApp::DrawGameButtons() {
-  
+  ui::Button("HIT");
+  ui::Button("STAND");
+  ui::Button("10");
+  ui::Button("100");
+  ui::Button("1000");
+  ui::Button("MAX");
 }
 
 }  // namespace myapp
