@@ -13,13 +13,15 @@ class Engine {
   {
     int color, value;
   };
-  std::vector<card> player, dealer;
+  std::vector<card> player_cards, dealer_cards;
   std::string BetToString(int value);
   int randomValueGenerator();
   int randomColorGenerator();
   std::vector<cinder::gl::Texture2dRef> LoadCards();
   
 };
+
+  
 
 }  // namespace mylibrary
 

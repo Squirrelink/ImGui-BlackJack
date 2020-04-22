@@ -39,6 +39,9 @@ class MyApp : public cinder::app::App {
   void bet(int i);
   void ResetBalance();
   mylibrary::Engine engine;
+  void DrawPlayerCards();
+  void DrawDealerCards();
+  cinder::gl::Texture2dRef GetCardTexture(int value, int color);
 };
 
 }  // namespace myapp

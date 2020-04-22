@@ -40,6 +40,8 @@ void MyApp::draw() {
   if (inGame && inRound) {
     DrawGameState();
     DrawGameButtons();
+    DrawPlayerCards();
+    DrawDealerCards();
   }
   ImGui::End();
 }
@@ -55,8 +57,6 @@ void MyApp::MenuButton() {
   }
 }
 void MyApp::LoadImages() {
-  int one = 2;
-  int two = 1;
   background_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "background.jpg" )));
   deck_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "deck.png" )));
   one_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "1.png" )));
@@ -64,7 +64,6 @@ void MyApp::LoadImages() {
   hundred_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "100.png" )));
   thousand_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "1000.png" )));
   max_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "max.png" )));
-  CheckCard = cinder::gl::Texture2d::create( loadImage( loadAsset( engine.BetToString(one) + "_" +engine.BetToString(two) + ".png")));
 }
 void MyApp::DrawGameState() {
   cinder::gl::draw(background_Texture);
@@ -73,7 +72,7 @@ void MyApp::DrawGameState() {
   std::string betText = "Current Bet: " + engine.BetToString(current_bet);
   ui::Text(balText.c_str());
   ui::Text(betText.c_str());
-  cinder::gl::draw(CheckCard);
+  cinder::gl::draw(GetCardTexture(2,1));
 }
 
 void MyApp::DrawGameButtons() {
@@ -121,5 +120,15 @@ void MyApp::ResetBalance() {
   balance+= current_bet;
   current_bet = 0;
 }
-
+void MyApp::DrawPlayerCards() {
+  
+}
+void MyApp::DrawDealerCards() {
+  
+}
+cinder::gl::Texture2dRef MyApp::GetCardTexture(int value, int color) {
+  cinder::gl::Texture2dRef card_texture;
+  card_texture = cinder::gl::Texture2d::create( loadImage( loadAsset( engine.BetToString(value) + "_" + engine.BetToString(color) + ".png")));
+  return card_texture;
+}
 }  // namespace myapp

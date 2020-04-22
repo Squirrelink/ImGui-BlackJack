@@ -5,6 +5,7 @@
 #include <cinder/gl/Shader.h>
 #include <cinder/gl/Texture.h>
 
+
 namespace mylibrary {
 
 
@@ -21,8 +22,10 @@ std::vector<cinder::gl::Texture2dRef> Engine::LoadCards() {
   return std::vector<cinder::gl::Texture2dRef>();
 }
 std::string Engine::BetToString(int value) {
+  
   std::stringstream ss;
   ss << value;
   return ss.str();
 }
+
 }  // namespace mylibrary
