@@ -1,7 +1,7 @@
 // Copyright (c) 2020 [Your Name]. All rights reserved.
 
 #include "my_app.h"
-
+#include <mylibrary/engine.h>
 #include <cinder/Log.h>
 #include <cinder/app/App.h>
 #include <cinder/gl/Texture.h>
@@ -19,6 +19,7 @@ void MyApp::setup() {
   ImGui::initialize();
   inMenu = true;
   inGame = false;
+  inRound = false;
   LoadImages();
 }
 
@@ -36,7 +37,7 @@ void MyApp::draw() {
     DrawGameState();
     DrawStartGameButtons();
   }
-  if (inGame && !isBetting) {
+  if (inGame && inRound) {
     DrawGameState();
     DrawGameButtons();
   }
@@ -54,6 +55,8 @@ void MyApp::MenuButton() {
   }
 }
 void MyApp::LoadImages() {
+  int one = 2;
+  int two = 1;
   background_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "background.jpg" )));
   deck_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "deck.png" )));
   one_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "1.png" )));
@@ -61,14 +64,16 @@ void MyApp::LoadImages() {
   hundred_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "100.png" )));
   thousand_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "1000.png" )));
   max_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "max.png" )));
+  CheckCard = cinder::gl::Texture2d::create( loadImage( loadAsset( engine.BetToString(one) + "_" +engine.BetToString(two) + ".png")));
 }
 void MyApp::DrawGameState() {
   cinder::gl::draw(background_Texture);
-  cinder::gl::draw(deck_Texture);
-  std::string balText = "Balance: " + BetToString(balance);
-  std::string betText = "Current Bet: " + BetToString(current_bet);
+//  cinder::gl::draw(deck_Texture);
+  std::string balText = "Balance: " + engine.BetToString(balance);
+  std::string betText = "Current Bet: " + engine.BetToString(current_bet);
   ui::Text(balText.c_str());
   ui::Text(betText.c_str());
+  cinder::gl::draw(CheckCard);
 }
 
 void MyApp::DrawGameButtons() {
@@ -78,7 +83,11 @@ void MyApp::DrawGameButtons() {
 
 void MyApp::DrawStartGameButtons() {
   if (ui::Button("Place Bet")) {
-    isBetting = false;
+    if (current_bet > 0) {
+      isBetting = false;
+      inRound = true;
+    } 
+    
   }
   if (ui::Button("Reset Bet")) {
     ResetBalance();
@@ -100,11 +109,7 @@ void MyApp::DrawStartGameButtons() {
   }
 }
 
-std::string MyApp::BetToString(int value) { 
-  std::stringstream ss;
-  ss << value;
-  return ss.str();
-}
+
 void MyApp::bet(int value) {
   if (value > balance) {
     return;

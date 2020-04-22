@@ -6,6 +6,7 @@
 #include <cinder/app/App.h>
 #include <cinder/gl/Shader.h>
 #include <cinder/gl/Texture.h>
+#include <mylibrary/engine.h>
 
 namespace myapp {
 
@@ -18,9 +19,9 @@ class MyApp : public cinder::app::App {
   void keyDown(cinder::app::KeyEvent) override;
   void MenuButton();
   void LoadImages();
-  std::string BetToString(int value);
   bool inMenu;
   bool inGame;
+  bool inRound;
   cinder::gl::Texture2dRef background_Texture;
   cinder::gl::Texture2dRef deck_Texture;
   cinder::gl::Texture2dRef one_chip_Texture;
@@ -28,6 +29,7 @@ class MyApp : public cinder::app::App {
   cinder::gl::Texture2dRef thousand_chip_Texture;
   cinder::gl::Texture2dRef ten_chip_Texture;
   cinder::gl::Texture2dRef max_chip_Texture;
+  cinder::gl::Texture2dRef CheckCard;
   bool isBetting;
   void DrawGameState();
   void DrawGameButtons();
@@ -36,6 +38,7 @@ class MyApp : public cinder::app::App {
   int current_bet = 0;
   void bet(int i);
   void ResetBalance();
+  mylibrary::Engine engine;
 };
 
 }  // namespace myapp

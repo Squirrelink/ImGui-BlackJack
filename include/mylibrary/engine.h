@@ -2,10 +2,22 @@
 #ifndef FINALPROJECT_MYLIBRARY_EXAMPLE_H_
 #define FINALPROJECT_MYLIBRARY_EXAMPLE_H_
 
+#include <cinder/app/App.h>
+#include <cinder/gl/Shader.h>
+#include <cinder/gl/Texture.h>
 
 namespace mylibrary {
 class Engine {
  public:
+  struct card
+  {
+    int color, value;
+  };
+  std::vector<card> player, dealer;
+  std::string BetToString(int value);
+  int randomValueGenerator();
+  int randomColorGenerator();
+  std::vector<cinder::gl::Texture2dRef> LoadCards();
   
 };
 
