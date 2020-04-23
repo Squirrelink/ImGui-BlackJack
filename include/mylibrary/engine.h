@@ -9,6 +9,7 @@
 namespace mylibrary {
 class Engine {
  public:
+  
   struct card
   {
     int color, value;
@@ -18,7 +19,9 @@ class Engine {
   int randomValueGenerator();
   int randomColorGenerator();
   std::vector<cinder::gl::Texture2dRef> LoadCards();
-  
+  void RunRound();
+  card DealCards();
+  int GetCardValue(Engine::card card);
 };
 
   

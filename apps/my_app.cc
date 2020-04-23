@@ -24,6 +24,7 @@ void MyApp::setup() {
 }
 
 void MyApp::update() {
+
 }
 
 void MyApp::draw() {
@@ -38,6 +39,7 @@ void MyApp::draw() {
     DrawStartGameButtons();
   }
   if (inGame && inRound) {
+    engine.RunRound();
     DrawGameState();
     DrawGameButtons();
     DrawPlayerCards();
@@ -72,7 +74,7 @@ void MyApp::DrawGameState() {
   std::string betText = "Current Bet: " + engine.BetToString(current_bet);
   ui::Text(balText.c_str());
   ui::Text(betText.c_str());
-  cinder::gl::draw(GetCardTexture(2,1));
+//  cinder::gl::draw(GetCardTexture(2,1));
 }
 
 void MyApp::DrawGameButtons() {
@@ -121,7 +123,14 @@ void MyApp::ResetBalance() {
   current_bet = 0;
 }
 void MyApp::DrawPlayerCards() {
+  size_t row = 0;
+  const cinder::vec2 center = getWindowCenter();
   
+  for (int i = 0; i < engine.player_cards.size(); i++) {
+    const cinder::vec2 locp = {center.x, center.y + (++row) * 50};
+    std::cout<<engine.GetCardValue(engine.player_cards[i])<<std::endl;
+    cinder::gl::draw(GetCardTexture(engine.player_cards[i].color,engine.GetCardValue(engine.player_cards[i])), locp);
+  }
 }
 void MyApp::DrawDealerCards() {
   
