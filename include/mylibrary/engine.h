@@ -20,8 +20,8 @@ class Engine {
   std::string BetToString(int value);
   int randomValueGenerator();
   int randomColorGenerator();
-  void RunRound();
-  void RunHit();
+  void RunRoundStart();
+  void RunPlayerHit();
   card DealCards();
   void bet(int value);
   void Engine::ResetBalance();

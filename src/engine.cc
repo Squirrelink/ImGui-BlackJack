@@ -23,13 +23,18 @@ std::string Engine::BetToString(int value) {
   return ss.str();
 }
 
-void Engine::RunRound() {
+void Engine::RunRoundStart() {
   if (player_cards.empty()) {
     card card1 = DealCards();
     card card2 = DealCards();
+    card card3 = DealCards();
+    card card4 = DealCards();
     player_cards.push_back(card1);
     player_cards.push_back(card2);
+    dealer_cards.push_back(card3);
+    dealer_cards.push_back(card4);
   }
+    
 }
 
 Engine::card Engine::DealCards() {
@@ -50,7 +55,7 @@ void Engine::ResetBalance() {
   balance += current_bet;
   current_bet = 0;
 }
-void Engine::RunHit() {
+void Engine::RunPlayerHit() {
   if (player_cards.size() < 5) {
     card card = DealCards();
     player_cards.push_back(card);

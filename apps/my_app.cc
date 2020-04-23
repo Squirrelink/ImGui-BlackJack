@@ -40,7 +40,7 @@ void MyApp::draw() {
     DrawStartGameButtons();
   }
   if (inGame && inRound) {
-    engine.RunRound();
+    engine.RunRoundStart();
     DrawGameState();
     DrawGameButtons();
     DrawPlayerCards();
@@ -79,7 +79,7 @@ void MyApp::DrawGameState() {
 
 void MyApp::DrawGameButtons() {
   if (ui::Button("HIT")) {
-    engine.RunHit();
+    engine.RunPlayerHit();
   }
   ui::Button("STAND");
 }
@@ -121,7 +121,13 @@ void MyApp::DrawPlayerCards() {
   }
 }
 void MyApp::DrawDealerCards() {
-  
+  size_t row = 0;
+  const cinder::vec2 center = getWindowCenter();
+  for (int i = 0; i < engine.dealer_cards.size(); i++) {
+    const cinder::vec2 locp = {300, 10 +(++row) * 70};
+    std::cout<< center.y<<std::endl;
+    cinder::gl::draw(GetCardTexture(engine.dealer_cards[i].value,engine.dealer_cards[i].color), locp);
+  }
 }
 cinder::gl::Texture2dRef MyApp::GetCardTexture(int value, int color) {
   cinder::gl::Texture2dRef card_texture;
