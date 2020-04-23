@@ -15,6 +15,8 @@ class Engine {
     int color, value;
   };
   std::vector<card> player_cards, dealer_cards;
+  int player_score = 0;
+  int dealer_score = 0;
   int balance = 1000;
   int current_bet = 0;
   std::string BetToString(int value);
@@ -24,7 +26,8 @@ class Engine {
   void RunPlayerHit();
   card DealCards();
   void bet(int value);
-  void Engine::ResetBalance();
+  void ResetBalance();
+  int EvaluateCardValue();
 };
 
   

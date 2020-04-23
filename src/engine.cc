@@ -29,6 +29,8 @@ void Engine::RunRoundStart() {
     card card2 = DealCards();
     card card3 = DealCards();
     card card4 = DealCards();
+    player_score += card1.value;
+    player_score += card2.value;
     player_cards.push_back(card1);
     player_cards.push_back(card2);
     dealer_cards.push_back(card3);
@@ -56,9 +58,32 @@ void Engine::ResetBalance() {
   current_bet = 0;
 }
 void Engine::RunPlayerHit() {
-  if (player_cards.size() < 5) {
+  if (player_cards.size() < 5 && player_score < 21) {
     card card = DealCards();
+    player_score += card.value;
     player_cards.push_back(card);
   }
+}
+
+int Engine::EvaluateCardValue() {
+  int total_score = 0;
+  for (int i = 0; i < player_cards.size(); i++) {
+    if (player_cards[i].value <= 10) {
+      total_score += player_cards[i].value;
+    }
+    if (player_cards[i].value > 10 && player_cards[i].value < 14) {
+      total_score += 10;
+    }
+    if (player_cards[i].value == 14) {
+      int check_ace = player_score;
+      check_ace += 11;
+      if (check_ace <= 21) {
+        total_score += 11;
+      } else {
+        total_score += 1;
+      }
+    }
+  }
+  return total_score;
 }
 }  // namespace mylibrary

@@ -32,6 +32,7 @@ class MyApp : public cinder::app::App {
   bool isBetting;
   void DrawGameState();
   void DrawGameButtons();
+  void DrawBetButtons();
   void DrawStartGameButtons();
   mylibrary::Engine engine;
   void DrawPlayerCards();

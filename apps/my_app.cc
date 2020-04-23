@@ -41,6 +41,7 @@ void MyApp::draw() {
   }
   if (inGame && inRound) {
     engine.RunRoundStart();
+    engine.player_score = engine.EvaluateCardValue();
     DrawGameState();
     DrawGameButtons();
     DrawPlayerCards();
@@ -82,6 +83,9 @@ void MyApp::DrawGameButtons() {
     engine.RunPlayerHit();
   }
   ui::Button("STAND");
+  ui::Button("DOUBLE");
+  std::string scoreText = "Current Score: " + engine.BetToString(engine.player_score);
+  ui::Text(scoreText.c_str());
 }
 
 void MyApp::DrawStartGameButtons() {
@@ -91,6 +95,32 @@ void MyApp::DrawStartGameButtons() {
       inRound = true;
     }
   }
+  DrawBetButtons();
+}
+
+
+void MyApp::DrawPlayerCards() {
+  size_t row = 0;
+  const cinder::vec2 center = getWindowCenter();
+  for (int i = 0; i < engine.player_cards.size(); i++) {
+    const cinder::vec2 locp = {center.x, center.y + (++row) * 70};
+    cinder::gl::draw(GetCardTexture(engine.player_cards[i].value,engine.player_cards[i].color), locp);
+  }
+}
+void MyApp::DrawDealerCards() {
+  size_t row = 0;
+  const cinder::vec2 center = getWindowCenter();
+  for (int i = 0; i < engine.dealer_cards.size(); i++) {
+    const cinder::vec2 locp = {300, 10 +(++row) * 70};
+    cinder::gl::draw(GetCardTexture(engine.dealer_cards[i].value,engine.dealer_cards[i].color), locp);
+  }
+}
+cinder::gl::Texture2dRef MyApp::GetCardTexture(int value, int color) {
+  cinder::gl::Texture2dRef card_texture;
+  card_texture = cinder::gl::Texture2d::create( loadImage( loadAsset( engine.BetToString(value) + "_" + engine.BetToString(color) + ".png")));
+  return card_texture;
+}
+void MyApp::DrawBetButtons() {
   if (ui::Button("Reset Bet")) {
     engine.ResetBalance();
   }
@@ -109,29 +139,5 @@ void MyApp::DrawStartGameButtons() {
   if (ui::ImageButton(max_chip_Texture,max_chip_Texture->getSize())) {
     engine.bet(engine.balance);
   }
-}
-
-
-void MyApp::DrawPlayerCards() {
-  size_t row = 0;
-  const cinder::vec2 center = getWindowCenter();
-  for (int i = 0; i < engine.player_cards.size(); i++) {
-    const cinder::vec2 locp = {center.x, center.y + (++row) * 70};
-    cinder::gl::draw(GetCardTexture(engine.player_cards[i].value,engine.player_cards[i].color), locp);
-  }
-}
-void MyApp::DrawDealerCards() {
-  size_t row = 0;
-  const cinder::vec2 center = getWindowCenter();
-  for (int i = 0; i < engine.dealer_cards.size(); i++) {
-    const cinder::vec2 locp = {300, 10 +(++row) * 70};
-    std::cout<< center.y<<std::endl;
-    cinder::gl::draw(GetCardTexture(engine.dealer_cards[i].value,engine.dealer_cards[i].color), locp);
-  }
-}
-cinder::gl::Texture2dRef MyApp::GetCardTexture(int value, int color) {
-  cinder::gl::Texture2dRef card_texture;
-  card_texture = cinder::gl::Texture2d::create( loadImage( loadAsset( engine.BetToString(value) + "_" + engine.BetToString(color) + ".png")));
-  return card_texture;
 }
 }  // namespace myapp
