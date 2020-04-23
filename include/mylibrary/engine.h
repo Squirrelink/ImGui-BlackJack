@@ -21,6 +21,7 @@ class Engine {
   int randomValueGenerator();
   int randomColorGenerator();
   void RunRound();
+  void RunHit();
   card DealCards();
   void bet(int value);
   void Engine::ResetBalance();

@@ -78,7 +78,9 @@ void MyApp::DrawGameState() {
 }
 
 void MyApp::DrawGameButtons() {
-  ui::Button("HIT");
+  if (ui::Button("HIT")) {
+    engine.RunHit();
+  }
   ui::Button("STAND");
 }
 
@@ -94,7 +96,6 @@ void MyApp::DrawStartGameButtons() {
   }
   if (ui::ImageButton(one_chip_Texture,one_chip_Texture->getSize())) {
     engine.bet(1);
-    
   }
   if (ui::ImageButton(ten_chip_Texture,ten_chip_Texture->getSize())) {
     engine.bet(10);
@@ -115,7 +116,7 @@ void MyApp::DrawPlayerCards() {
   size_t row = 0;
   const cinder::vec2 center = getWindowCenter();
   for (int i = 0; i < engine.player_cards.size(); i++) {
-    const cinder::vec2 locp = {center.x, center.y + (++row) * 50};
+    const cinder::vec2 locp = {center.x, center.y + (++row) * 70};
     cinder::gl::draw(GetCardTexture(engine.player_cards[i].value,engine.player_cards[i].color), locp);
   }
 }

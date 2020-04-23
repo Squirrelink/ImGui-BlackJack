@@ -50,4 +50,10 @@ void Engine::ResetBalance() {
   balance += current_bet;
   current_bet = 0;
 }
+void Engine::RunHit() {
+  if (player_cards.size() < 5) {
+    card card = DealCards();
+    player_cards.push_back(card);
+  }
+}
 }  // namespace mylibrary
