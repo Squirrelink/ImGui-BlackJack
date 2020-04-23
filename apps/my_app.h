@@ -33,10 +33,6 @@ class MyApp : public cinder::app::App {
   void DrawGameState();
   void DrawGameButtons();
   void DrawStartGameButtons();
-  int balance = 1000;
-  int current_bet = 0;
-  void bet(int i);
-  void ResetBalance();
   mylibrary::Engine engine;
   void DrawPlayerCards();
   void DrawDealerCards();

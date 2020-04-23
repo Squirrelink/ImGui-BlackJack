@@ -15,14 +15,15 @@ class Engine {
     int color, value;
   };
   std::vector<card> player_cards, dealer_cards;
+  int balance = 1000;
+  int current_bet = 0;
   std::string BetToString(int value);
   int randomValueGenerator();
   int randomColorGenerator();
-  std::vector<cinder::gl::Texture2dRef> LoadCards();
   void RunRound();
   card DealCards();
-  int GetCardValue(Engine::card card);
-  
+  void bet(int value);
+  void Engine::ResetBalance();
 };
 
   

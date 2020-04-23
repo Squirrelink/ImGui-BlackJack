@@ -5,9 +5,7 @@
 #include <cinder/gl/Shader.h>
 #include <cinder/gl/Texture.h>
 
-
 namespace mylibrary {
-
 
 int Engine::randomColorGenerator() {
   int nr = rand() % 4 + 1;
@@ -19,9 +17,6 @@ int Engine::randomValueGenerator() {
   return nr;
 }
 
-std::vector<cinder::gl::Texture2dRef> Engine::LoadCards() {
-  return std::vector<cinder::gl::Texture2dRef>();
-}
 std::string Engine::BetToString(int value) {
   std::stringstream ss;
   ss << value;
@@ -37,14 +32,22 @@ void Engine::RunRound() {
   }
 }
 
-
 Engine::card Engine::DealCards() {
   card dealt_card;
   dealt_card.value = randomValueGenerator();
   dealt_card.color = randomColorGenerator();
   return dealt_card;
 }
-int Engine::GetCardValue(Engine::card card) { 
-  return card.value;
+
+void Engine::bet(int value) {
+  if (value > balance) {
+    return;
+  }
+  current_bet += value;
+  balance -= value;
+}
+void Engine::ResetBalance() {
+  balance += current_bet;
+  current_bet = 0;
 }
 }  // namespace mylibrary

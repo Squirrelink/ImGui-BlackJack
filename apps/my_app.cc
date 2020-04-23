@@ -71,8 +71,8 @@ void MyApp::LoadImages() {
 void MyApp::DrawGameState() {
   cinder::gl::draw(background_Texture);
   cinder::gl::draw(deck_Texture);
-  std::string balText = "Balance: " + engine.BetToString(balance);
-  std::string betText = "Current Bet: " + engine.BetToString(current_bet);
+  std::string balText = "Balance: " + engine.BetToString(engine.balance);
+  std::string betText = "Current Bet: " + engine.BetToString(engine.current_bet);
   ui::Text(balText.c_str());
   ui::Text(betText.c_str());
 }
@@ -84,43 +84,33 @@ void MyApp::DrawGameButtons() {
 
 void MyApp::DrawStartGameButtons() {
   if (ui::Button("Place Bet")) {
-    if (current_bet > 0) {
+    if (engine.current_bet > 0) {
       isBetting = false;
       inRound = true;
     }
   }
   if (ui::Button("Reset Bet")) {
-    ResetBalance();
+    engine.ResetBalance();
   }
   if (ui::ImageButton(one_chip_Texture,one_chip_Texture->getSize())) {
-    bet(1);
+    engine.bet(1);
+    
   }
   if (ui::ImageButton(ten_chip_Texture,ten_chip_Texture->getSize())) {
-    bet(10);
+    engine.bet(10);
   }
   if (ui::ImageButton(hundred_chip_Texture,hundred_chip_Texture->getSize())) {
-    bet(100);
+    engine.bet(100);
   }
   if (ui::ImageButton(thousand_chip_Texture,thousand_chip_Texture->getSize())) {
-    bet(1000);
+    engine.bet(1000);
   }
   if (ui::ImageButton(max_chip_Texture,max_chip_Texture->getSize())) {
-    bet(balance);
+    engine.bet(engine.balance);
   }
 }
 
 
-void MyApp::bet(int value) {
-  if (value > balance) {
-    return;
-  }
-  current_bet += value;
-  balance -= value;
-}
-void MyApp::ResetBalance() {
-  balance+= current_bet;
-  current_bet = 0;
-}
 void MyApp::DrawPlayerCards() {
   size_t row = 0;
   const cinder::vec2 center = getWindowCenter();
