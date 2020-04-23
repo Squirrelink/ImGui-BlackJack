@@ -10,15 +10,11 @@ namespace mylibrary {
 
 
 int Engine::randomColorGenerator() {
-  unsigned seed = time(0);
-  srand(seed);
   int nr = rand() % 4 + 1;
   return nr;
 }
 
 int Engine::randomValueGenerator() {
-  unsigned seed = time(0);
-  srand(seed);
   int nr = rand() % 14 + 1;
   return nr;
 }
@@ -44,8 +40,8 @@ void Engine::RunRound() {
 
 Engine::card Engine::DealCards() {
   card dealt_card;
-  dealt_card.color = randomValueGenerator();
-  dealt_card.value = randomColorGenerator();
+  dealt_card.value = randomValueGenerator();
+  dealt_card.color = randomColorGenerator();
   return dealt_card;
 }
 int Engine::GetCardValue(Engine::card card) { 

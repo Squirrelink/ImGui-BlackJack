@@ -21,6 +21,7 @@ void MyApp::setup() {
   inGame = false;
   inRound = false;
   LoadImages();
+  srand(time(0));
 }
 
 void MyApp::update() {
@@ -69,12 +70,11 @@ void MyApp::LoadImages() {
 }
 void MyApp::DrawGameState() {
   cinder::gl::draw(background_Texture);
-//  cinder::gl::draw(deck_Texture);
+  cinder::gl::draw(deck_Texture);
   std::string balText = "Balance: " + engine.BetToString(balance);
   std::string betText = "Current Bet: " + engine.BetToString(current_bet);
   ui::Text(balText.c_str());
   ui::Text(betText.c_str());
-//  cinder::gl::draw(GetCardTexture(2,1));
 }
 
 void MyApp::DrawGameButtons() {
@@ -87,8 +87,7 @@ void MyApp::DrawStartGameButtons() {
     if (current_bet > 0) {
       isBetting = false;
       inRound = true;
-    } 
-    
+    }
   }
   if (ui::Button("Reset Bet")) {
     ResetBalance();
@@ -125,11 +124,9 @@ void MyApp::ResetBalance() {
 void MyApp::DrawPlayerCards() {
   size_t row = 0;
   const cinder::vec2 center = getWindowCenter();
-  
   for (int i = 0; i < engine.player_cards.size(); i++) {
     const cinder::vec2 locp = {center.x, center.y + (++row) * 50};
-    std::cout<<engine.GetCardValue(engine.player_cards[i])<<std::endl;
-    cinder::gl::draw(GetCardTexture(engine.player_cards[i].color,engine.GetCardValue(engine.player_cards[i])), locp);
+    cinder::gl::draw(GetCardTexture(engine.player_cards[i].value,engine.player_cards[i].color), locp);
   }
 }
 void MyApp::DrawDealerCards() {

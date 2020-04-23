@@ -29,7 +29,6 @@ class MyApp : public cinder::app::App {
   cinder::gl::Texture2dRef thousand_chip_Texture;
   cinder::gl::Texture2dRef ten_chip_Texture;
   cinder::gl::Texture2dRef max_chip_Texture;
-  cinder::gl::Texture2dRef CheckCard;
   bool isBetting;
   void DrawGameState();
   void DrawGameButtons();
