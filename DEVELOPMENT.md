@@ -11,6 +11,14 @@
 **4/22/2020** Implemented Betting System
 - Added menu to the game that transitions to game
 - Added betting system to control bets and balance functionality
+- Added engine class to run game functions
+- Added card texture Loader To load image of card to GUI
 
+**4/23/2020** Implemented Card Dealing
+- Moved betting system into engine class
+- Implemented card dealing to start game
+- Implemented hit button to give player more cards
+- Draws player and dealer cards on the screen for GUI
+- Added score counter for player
 
 ---
