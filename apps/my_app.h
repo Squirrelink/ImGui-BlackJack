@@ -29,6 +29,7 @@ class MyApp : public cinder::app::App {
   cinder::gl::Texture2dRef thousand_chip_Texture;
   cinder::gl::Texture2dRef ten_chip_Texture;
   cinder::gl::Texture2dRef max_chip_Texture;
+  cinder::gl::Texture2dRef card_back_Texture;
   bool isBetting;
   void DrawGameState();
   void DrawGameButtons();
@@ -37,6 +38,7 @@ class MyApp : public cinder::app::App {
   mylibrary::Engine engine;
   void DrawPlayerCards();
   void DrawDealerCards();
+  void DrawInitialDealerCards();
   cinder::gl::Texture2dRef GetCardTexture(int value, int color);
 };
 

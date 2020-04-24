@@ -28,6 +28,7 @@ class Engine {
   void bet(int value);
   void ResetBalance();
   int EvaluateCardValue();
+  
 };
 
   

@@ -45,7 +45,7 @@ void MyApp::draw() {
     DrawGameState();
     DrawGameButtons();
     DrawPlayerCards();
-    DrawDealerCards();
+    DrawInitialDealerCards();
   }
   ImGui::End();
 }
@@ -68,6 +68,7 @@ void MyApp::LoadImages() {
   hundred_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "100.png" )));
   thousand_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "1000.png" )));
   max_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "max.png" )));
+  card_back_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "cardBack.png" )));
 }
 void MyApp::DrawGameState() {
   cinder::gl::draw(background_Texture);
@@ -139,5 +140,15 @@ void MyApp::DrawBetButtons() {
   if (ui::ImageButton(max_chip_Texture,max_chip_Texture->getSize())) {
     engine.bet(engine.balance);
   }
+}
+void MyApp::DrawInitialDealerCards() {
+  size_t row = 0;
+  const cinder::vec2 center = getWindowCenter();
+  const cinder::vec2 locp = {300, 10 +(++row) * 70};
+  const cinder::vec2 locp_two = {300, 10 +(++row) * 70};
+  cinder::gl::draw(card_back_Texture, locp);
+  cinder::gl::draw(GetCardTexture(engine.dealer_cards[0].value,engine.dealer_cards[0].color), locp_two);
+    
+    
 }
 }  // namespace myapp
