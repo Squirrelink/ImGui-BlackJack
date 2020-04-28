@@ -36,11 +36,25 @@ void MyApp::draw() {
   ImGui::SetWindowFontScale(1.8);
   
   if (engine.is_transition) {
-    DrawPlayerLose();
-    DrawDealerCards();
+    if (engine.player_score > 21) {
+      DrawPlayerLose();
+    } else if (engine.player_score == 21) {
+      DrawPlayerWin();
+    } else {
+      if (engine.EvaluateRound() == 1) {
+        DrawPlayerWin();
+      }
+      if (engine.EvaluateRound() == 2) {
+        DrawPlayerLose();
+      }
+      if (engine.EvaluateRound() == 3) {
+        DrawTie();
+      }
+    }
     DrawGameState();
     DrawPlayerCards();
     DrawNewRoundButton();
+    DrawDealerCards();
   }
   if (engine.inMenu) {
     MenuButton();
@@ -54,6 +68,8 @@ void MyApp::draw() {
     engine.player_score = engine.EvaluateCardValue();
     if (engine.player_score > 21) {
       engine.is_transition = true;
+    } else if (engine.player_score == 21) {
+      engine.is_transition == true;
     }
     DrawGameState();
     DrawGameButtons();
@@ -98,7 +114,9 @@ void MyApp::DrawGameButtons() {
   if (ui::Button("HIT")) {
     engine.RunPlayerHit();
   }
-  ui::Button("STAND");
+  if (ui::Button("STAND")) {
+    engine.is_transition = true;
+  }
   ui::Button("DOUBLE");
   std::string scoreText = "Current Score: " + engine.BetToString(engine.player_score);
   ui::Text(scoreText.c_str());
@@ -171,12 +189,22 @@ void MyApp::DrawPlayerLose() {
   ui::Text("You Lost");
   std::string lost_bet = "- " + engine.BetToString(engine.current_bet);
   ui::Text(lost_bet.c_str());
-  
 }
+
 void MyApp::DrawNewRoundButton() {
   if (ui::Button("New Round")) {
     engine.ResetRound();
   }
+}
+void MyApp::DrawPlayerWin() {
+  ui::Text("You Won");
+  std::string won_bet = "+ " + engine.BetToString(engine.current_bet);
+  ui::Text(won_bet.c_str());
+}
+void MyApp::DrawTie() {
+  ui::Text("Tie! No Winner");
+  std::string tie_bet = "+ " + engine.BetToString(engine.current_bet);
+  ui::Text(tie_bet.c_str());
 }
 
 }  // namespace myapp
