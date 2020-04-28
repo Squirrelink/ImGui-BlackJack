@@ -86,4 +86,15 @@ int Engine::EvaluateCardValue() {
   }
   return total_score;
 }
+int Engine::EvaluateRound() { 
+  if (player_score > dealer_score) {
+    return 1;
+  }
+  if (player_score < dealer_score) {
+    return 2;
+  }
+  if (player_score == dealer_score) {
+    return 3;
+  }
+}
 }  // namespace mylibrary

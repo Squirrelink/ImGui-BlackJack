@@ -7,6 +7,7 @@
 #include <cinder/gl/Texture.h>
 #include <cinder/gl/wrapper.h>
 #include <cinder/gl/draw.h>
+#include <chrono>
 #include "CinderImGui.h"
 
 namespace myapp {
@@ -17,9 +18,10 @@ MyApp::MyApp() { }
 
 void MyApp::setup() {
   ImGui::initialize();
-  inMenu = true;
-  inGame = false;
-  inRound = false;
+  engine.inMenu = true;
+  engine.inGame = false;
+  engine.inRound = false;
+  engine.is_transition = false;
   LoadImages();
   srand(time(0));
 }
@@ -32,16 +34,24 @@ void MyApp::draw() {
   cinder::gl::clear();
   ImGui::Begin("Menu");
   ImGui::SetWindowFontScale(1.8);
-  if (inMenu) {
+  
+  if (engine.is_transition) {
+    DrawPlayerLose();
+  }
+  if (engine.inMenu) {
     MenuButton();
   }
-  if (inGame && isBetting) {
+  if (engine.inGame && engine.isBetting) {
     DrawGameState();
     DrawStartGameButtons();
   }
-  if (inGame && inRound) {
+  if (engine.inGame && engine.inRound && !engine.is_transition) {
     engine.RunRoundStart();
     engine.player_score = engine.EvaluateCardValue();
+    if (engine.player_score > 21) {
+      engine.is_transition = true;
+    }
+    
     DrawGameState();
     DrawGameButtons();
     DrawPlayerCards();
@@ -55,11 +65,12 @@ void MyApp::keyDown(KeyEvent event) { }
 void MyApp::MenuButton() {
   
   if (ui::Button( "Start Game" )) {
-    inMenu = false;
-    inGame = true;
-    isBetting = true;
+    engine.inMenu = false;
+    engine.inGame = true;
+    engine.isBetting = true;
   }
 }
+
 void MyApp::LoadImages() {
   background_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "background.jpg" )));
   deck_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "deck.png" )));
@@ -70,6 +81,7 @@ void MyApp::LoadImages() {
   max_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "max.png" )));
   card_back_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "cardBack.png" )));
 }
+
 void MyApp::DrawGameState() {
   cinder::gl::draw(background_Texture);
   cinder::gl::draw(deck_Texture);
@@ -92,8 +104,8 @@ void MyApp::DrawGameButtons() {
 void MyApp::DrawStartGameButtons() {
   if (ui::Button("Place Bet")) {
     if (engine.current_bet > 0) {
-      isBetting = false;
-      inRound = true;
+      engine.isBetting = false;
+      engine.inRound = true;
     }
   }
   DrawBetButtons();
@@ -108,6 +120,7 @@ void MyApp::DrawPlayerCards() {
     cinder::gl::draw(GetCardTexture(engine.player_cards[i].value,engine.player_cards[i].color), locp);
   }
 }
+
 void MyApp::DrawDealerCards() {
   size_t row = 0;
   const cinder::vec2 center = getWindowCenter();
@@ -116,6 +129,16 @@ void MyApp::DrawDealerCards() {
     cinder::gl::draw(GetCardTexture(engine.dealer_cards[i].value,engine.dealer_cards[i].color), locp);
   }
 }
+
+void MyApp::DrawInitialDealerCards() {
+  size_t row = 0;
+  const cinder::vec2 center = getWindowCenter();
+  const cinder::vec2 locp = {300, 10 +(++row) * 70};
+  const cinder::vec2 locp_two = {300, 10 +(++row) * 70};
+  cinder::gl::draw(card_back_Texture, locp);
+  cinder::gl::draw(GetCardTexture(engine.dealer_cards[0].value,engine.dealer_cards[0].color), locp_two);
+}
+
 cinder::gl::Texture2dRef MyApp::GetCardTexture(int value, int color) {
   cinder::gl::Texture2dRef card_texture;
   card_texture = cinder::gl::Texture2d::create( loadImage( loadAsset( engine.BetToString(value) + "_" + engine.BetToString(color) + ".png")));
@@ -141,14 +164,12 @@ void MyApp::DrawBetButtons() {
     engine.bet(engine.balance);
   }
 }
-void MyApp::DrawInitialDealerCards() {
-  size_t row = 0;
-  const cinder::vec2 center = getWindowCenter();
-  const cinder::vec2 locp = {300, 10 +(++row) * 70};
-  const cinder::vec2 locp_two = {300, 10 +(++row) * 70};
-  cinder::gl::draw(card_back_Texture, locp);
-  cinder::gl::draw(GetCardTexture(engine.dealer_cards[0].value,engine.dealer_cards[0].color), locp_two);
-    
-    
+void MyApp::DrawPlayerLose() {
+  ui::Text("You Lost");
+  std::string lost_bet = "- " + engine.BetToString(engine.current_bet);
+  ui::Text(lost_bet.c_str());
+  if (ui::Button("New Round")) {
+  }
 }
+
 }  // namespace myapp

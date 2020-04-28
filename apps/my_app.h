@@ -7,6 +7,7 @@
 #include <cinder/gl/Shader.h>
 #include <cinder/gl/Texture.h>
 #include <mylibrary/engine.h>
+#include <chrono>
 
 namespace myapp {
 
@@ -20,8 +21,12 @@ class MyApp : public cinder::app::App {
   void MenuButton();
   void LoadImages();
   bool inMenu;
+  bool isBetting;
   bool inGame;
   bool inRound;
+  bool is_end_round;
+  std::chrono::system_clock clock;
+  std::chrono::time_point<std::chrono::system_clock> last_transition_time_;
   cinder::gl::Texture2dRef background_Texture;
   cinder::gl::Texture2dRef deck_Texture;
   cinder::gl::Texture2dRef one_chip_Texture;
@@ -30,7 +35,7 @@ class MyApp : public cinder::app::App {
   cinder::gl::Texture2dRef ten_chip_Texture;
   cinder::gl::Texture2dRef max_chip_Texture;
   cinder::gl::Texture2dRef card_back_Texture;
-  bool isBetting;
+  
   void DrawGameState();
   void DrawGameButtons();
   void DrawBetButtons();
@@ -39,6 +44,7 @@ class MyApp : public cinder::app::App {
   void DrawPlayerCards();
   void DrawDealerCards();
   void DrawInitialDealerCards();
+  void DrawPlayerLose();
   cinder::gl::Texture2dRef GetCardTexture(int value, int color);
 };
 

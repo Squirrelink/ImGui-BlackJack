@@ -19,6 +19,12 @@ class Engine {
   int dealer_score = 0;
   int balance = 1000;
   int current_bet = 0;
+  bool inMenu;
+  bool isBetting;
+  bool inGame;
+  bool inRound;
+  bool is_transition;
+  int EvaluateRound();
   std::string BetToString(int value);
   int randomValueGenerator();
   int randomColorGenerator();
