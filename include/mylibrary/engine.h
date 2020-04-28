@@ -30,6 +30,7 @@ class Engine {
   int randomColorGenerator();
   void RunRoundStart();
   void RunPlayerHit();
+  void RunDealerHit();
   card DealCards();
   void bet(int value);
   void ResetBalance();

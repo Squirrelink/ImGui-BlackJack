@@ -71,7 +71,8 @@ void MyApp::draw() {
     engine.dealer_score = engine.EvaluateDealerCardValue();
     if (engine.player_score > 21) {
       engine.is_transition = true;
-    } else if (engine.player_score == 21) {
+    }
+    if (engine.player_score == 21) {
       engine.is_transition == true;
     }
     DrawGameState();

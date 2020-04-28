@@ -79,6 +79,7 @@ int Engine::EvaluateCardValue() {
       ace_position.push_back(i);
     }
   }
+  //checks for ace value after checking regular card values
   for (int i = 0; i < ace_position.size(); i++) {
     int check_ace = total_score;
     check_ace += 11;
@@ -91,6 +92,13 @@ int Engine::EvaluateCardValue() {
   return total_score;
 }
 int Engine::EvaluateRound() { 
+  while (dealer_score < 17 && dealer_score < player_score) {
+    RunDealerHit();
+  }
+  if (dealer_score > 21) {
+    return 1;
+  }
+  
   if (player_score > dealer_score) {
     return 1;
   }
@@ -138,5 +146,12 @@ int Engine::EvaluateDealerCardValue() {
     }
   }
   return total_score;
+}
+void Engine::RunDealerHit() {
+  if (player_cards.size() < 5) {
+    card card = DealCards();
+    dealer_cards.push_back(card);
+    dealer_score = EvaluateDealerCardValue();
+  }
 }
 }  // namespace mylibrary
