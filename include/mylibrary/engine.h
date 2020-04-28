@@ -14,7 +14,7 @@ class Engine {
   {
     int color, value;
   };
-  std::vector<card> player_cards, dealer_cards;
+  std::vector<card> player_cards, dealer_cards, dealt_cards;
   int player_score = 0;
   int dealer_score = 0;
   int balance = 1000;

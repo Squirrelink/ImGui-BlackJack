@@ -36,13 +36,13 @@ void Engine::RunRoundStart() {
     dealer_cards.push_back(card3);
     dealer_cards.push_back(card4);
   }
-    
 }
 
 Engine::card Engine::DealCards() {
   card dealt_card;
   dealt_card.value = randomValueGenerator();
   dealt_card.color = randomColorGenerator();
+  dealt_cards.push_back(dealt_card);
   return dealt_card;
 }
 
@@ -67,6 +67,7 @@ void Engine::RunPlayerHit() {
 
 int Engine::EvaluateCardValue() {
   int total_score = 0;
+  std::vector<int> ace_position;
   for (int i = 0; i < player_cards.size(); i++) {
     if (player_cards[i].value <= 10) {
       total_score += player_cards[i].value;
@@ -75,13 +76,16 @@ int Engine::EvaluateCardValue() {
       total_score += 10;
     }
     if (player_cards[i].value == 14) {
-      int check_ace = player_score;
-      check_ace += 11;
-      if (check_ace > 21) {
-        total_score += 1;
-      } else {
-        total_score += 11;
-      }
+      ace_position.push_back(i);
+    }
+  }
+  for (int i = 0; i < ace_position.size(); i++) {
+    int check_ace = total_score;
+    check_ace += 11;
+    if (check_ace > 21) {
+      total_score += 1;
+    } else {
+      total_score += 11;
     }
   }
   return total_score;
@@ -111,6 +115,7 @@ void Engine::ResetRound() {
 }
 int Engine::EvaluateDealerCardValue() {
   int total_score = 0;
+  std::vector<int> ace_position;
   for (int i = 0; i < dealer_cards.size(); i++) {
     if (dealer_cards[i].value <= 10) {
       total_score += dealer_cards[i].value;
@@ -119,13 +124,17 @@ int Engine::EvaluateDealerCardValue() {
       total_score += 10;
     }
     if (dealer_cards[i].value == 14) {
-      int check_ace = dealer_score;
-      check_ace += 11;
-      if (check_ace > 21) {
-        total_score += 1;
-      } else {
-        total_score += 11;
-      }
+      ace_position.push_back(i);
+    }
+  }
+  //checks for ace value after other cards have been evaluated
+  for (int i = 0; i < ace_position.size(); i++) {
+    int check_ace = total_score;
+    check_ace += 11;
+    if (check_ace > 21) {
+      total_score += 1;
+    } else {
+      total_score += 11;
     }
   }
   return total_score;
