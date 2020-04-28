@@ -34,6 +34,7 @@ class Engine {
   void bet(int value);
   void ResetBalance();
   int EvaluateCardValue();
+  int EvaluateDealerCardValue();
   void ResetRound();
 };
 
