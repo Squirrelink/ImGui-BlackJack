@@ -37,6 +37,9 @@ void MyApp::draw() {
   
   if (engine.is_transition) {
     DrawPlayerLose();
+    DrawDealerCards();
+    DrawGameState();
+    DrawPlayerCards();
   }
   if (engine.inMenu) {
     MenuButton();
