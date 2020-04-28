@@ -148,7 +148,7 @@ int Engine::EvaluateDealerCardValue() {
   return total_score;
 }
 void Engine::RunDealerHit() {
-  if (player_cards.size() < 5) {
+  while (dealer_cards.size() < 5 && dealer_score < 17 && dealer_score < player_score) {
     card card = DealCards();
     dealer_cards.push_back(card);
     dealer_score = EvaluateDealerCardValue();

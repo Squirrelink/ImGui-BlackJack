@@ -36,10 +36,10 @@ void MyApp::draw() {
   ImGui::SetWindowFontScale(1.8);
   
   if (engine.is_transition) {
-    if (engine.player_score > 21) {
-      DrawPlayerLose();
-    } else if (engine.player_score == 21) {
+    if (engine.player_score == 21) {
       DrawPlayerWin();
+    } else if (engine.player_score > 21) {
+      DrawPlayerLose();
     } else {
       if (engine.EvaluateRound() == 1) {
         DrawPlayerWin();
