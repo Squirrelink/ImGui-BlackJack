@@ -21,4 +21,17 @@
 - Draws player and dealer cards on the screen for GUI
 - Added score counter for player
 
+**4/25/2020** Started Adding Gameflow
+- Added Timer and transition state to game engine
+- Attmpted to implement timed transition state upon user bust
+
+**4/27/2020** Changed Gameflow Design
+- Changed timer during transition to be a button for new round
+- implemented A reset function in engine to reset game state for new round
+- looked into bug where game crashes when code is added
+
+**4/28/2020** Implemented Game Flow For Bust
+- Added gameflow button where player goes over 21 by hitting
+- fixed bug where player Ace and 10 value card didn't equal blackjack
+
 ---

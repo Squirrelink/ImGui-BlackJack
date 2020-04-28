@@ -40,6 +40,7 @@ class MyApp : public cinder::app::App {
   void DrawGameButtons();
   void DrawBetButtons();
   void DrawStartGameButtons();
+  void DrawNewRoundButton();
   mylibrary::Engine engine;
   void DrawPlayerCards();
   void DrawDealerCards();

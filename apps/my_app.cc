@@ -40,6 +40,7 @@ void MyApp::draw() {
     DrawDealerCards();
     DrawGameState();
     DrawPlayerCards();
+    DrawNewRoundButton();
   }
   if (engine.inMenu) {
     MenuButton();
@@ -54,7 +55,6 @@ void MyApp::draw() {
     if (engine.player_score > 21) {
       engine.is_transition = true;
     }
-    
     DrawGameState();
     DrawGameButtons();
     DrawPlayerCards();
@@ -171,6 +171,9 @@ void MyApp::DrawPlayerLose() {
   ui::Text("You Lost");
   std::string lost_bet = "- " + engine.BetToString(engine.current_bet);
   ui::Text(lost_bet.c_str());
+  
+}
+void MyApp::DrawNewRoundButton() {
   if (ui::Button("New Round")) {
     engine.ResetRound();
   }
