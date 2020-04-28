@@ -172,6 +172,7 @@ void MyApp::DrawPlayerLose() {
   std::string lost_bet = "- " + engine.BetToString(engine.current_bet);
   ui::Text(lost_bet.c_str());
   if (ui::Button("New Round")) {
+    engine.ResetRound();
   }
 }
 

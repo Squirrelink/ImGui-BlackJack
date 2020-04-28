@@ -97,4 +97,16 @@ int Engine::EvaluateRound() {
     return 3;
   }
 }
+
+void Engine::ResetRound() {
+  player_score = 0;
+  dealer_score = 0;
+  current_bet = 0;
+  isBetting = true;
+  is_transition = false;
+  inRound = false;
+  player_cards.clear();
+  dealer_cards.clear();
+  
+}
 }  // namespace mylibrary
