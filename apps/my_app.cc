@@ -63,12 +63,12 @@ void MyApp::draw() {
     engine.RunRoundStart();
     engine.player_score = engine.EvaluateCardValue();
     engine.dealer_score = engine.EvaluateDealerCardValue();
-    if (engine.player_score == 21) {
+    if (engine.GetPlayerScore() == 21) {
       engine.is_transition = true;
       engine.updated_balance = false;
     }
-    if (engine.player_score > 21) {
-      engine.is_transition == true;
+    if (engine.GetPlayerScore() > 21) {
+      engine.is_transition = true;
       engine.updated_balance = false;
     }
     DrawGameState();

@@ -101,16 +101,16 @@ int Engine::EvaluateRound() {
     }
     return 1;
   }
+  if (player_score < dealer_score || player_score > 21 || dealer_score == 21) {
+    updated_balance = true;
+    return 2;
+  }
   if (player_score > dealer_score || player_score == 21) {
     if (updated_balance == false) {
       balance += (2 * current_bet);
       updated_balance = true;
     }
     return 1;
-  }
-  if (player_score < dealer_score || player_score > 21 || dealer_score == 21) {
-    updated_balance = true;
-    return 2;
   }
   if (player_score == dealer_score) {
     if (updated_balance == false) {
@@ -165,5 +165,8 @@ void Engine::RunDealerHit() {
     dealer_cards.push_back(card);
     dealer_score = EvaluateDealerCardValue();
   }
+}
+int Engine::GetPlayerScore() { 
+  return player_score;
 }
 }  // namespace mylibrary

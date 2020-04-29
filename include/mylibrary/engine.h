@@ -26,6 +26,7 @@ class Engine {
   bool is_transition;
   bool updated_balance;
   int EvaluateRound();
+  int GetPlayerScore();
   std::string BetToString(int value);
   int randomValueGenerator();
   int randomColorGenerator();
