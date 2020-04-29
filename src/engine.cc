@@ -91,21 +91,32 @@ int Engine::EvaluateCardValue() {
   }
   return total_score;
 }
-int Engine::EvaluateRound() { 
-  while (dealer_score < 17 && dealer_score < player_score) {
-    RunDealerHit();
-  }
+
+int Engine::EvaluateRound() {
+  RunDealerHit();
   if (dealer_score > 21) {
+    if (updated_balance == false) {
+      balance += (2*current_bet);
+      updated_balance = true;
+    }
     return 1;
   }
-  
-  if (player_score > dealer_score) {
+  if (player_score > dealer_score || player_score == 21) {
+    if (updated_balance == false) {
+      balance += (2 * current_bet);
+      updated_balance = true;
+    }
     return 1;
   }
-  if (player_score < dealer_score) {
+  if (player_score < dealer_score || player_score > 21 || dealer_score == 21) {
+    updated_balance = true;
     return 2;
   }
   if (player_score == dealer_score) {
+    if (updated_balance == false) {
+      balance += current_bet;
+      updated_balance = true;
+    }
     return 3;
   }
 }
@@ -147,6 +158,7 @@ int Engine::EvaluateDealerCardValue() {
   }
   return total_score;
 }
+
 void Engine::RunDealerHit() {
   while (dealer_cards.size() < 5 && dealer_score < 17 && dealer_score < player_score) {
     card card = DealCards();

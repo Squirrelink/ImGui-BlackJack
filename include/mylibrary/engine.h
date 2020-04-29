@@ -24,6 +24,7 @@ class Engine {
   bool inGame;
   bool inRound;
   bool is_transition;
+  bool updated_balance;
   int EvaluateRound();
   std::string BetToString(int value);
   int randomValueGenerator();

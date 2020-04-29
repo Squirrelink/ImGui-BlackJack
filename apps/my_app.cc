@@ -22,6 +22,7 @@ void MyApp::setup() {
   engine.inGame = false;
   engine.inRound = false;
   engine.is_transition = false;
+  engine.updated_balance = true;
   LoadImages();
   srand(time(0));
 }
@@ -34,13 +35,7 @@ void MyApp::draw() {
   cinder::gl::clear();
   ImGui::Begin("Menu");
   ImGui::SetWindowFontScale(1.8);
-  
   if (engine.is_transition) {
-    if (engine.player_score == 21) {
-      DrawPlayerWin();
-    } else if (engine.player_score > 21) {
-      DrawPlayerLose();
-    } else {
       if (engine.EvaluateRound() == 1) {
         DrawPlayerWin();
       }
@@ -50,7 +45,6 @@ void MyApp::draw() {
       if (engine.EvaluateRound() == 3) {
         DrawTie();
       }
-    }
     DrawGameState();
     DrawPlayerCards();
     DrawNewRoundButton();
@@ -69,11 +63,13 @@ void MyApp::draw() {
     engine.RunRoundStart();
     engine.player_score = engine.EvaluateCardValue();
     engine.dealer_score = engine.EvaluateDealerCardValue();
-    if (engine.player_score > 21) {
-      engine.is_transition = true;
-    }
     if (engine.player_score == 21) {
+      engine.is_transition = true;
+      engine.updated_balance = false;
+    }
+    if (engine.player_score > 21) {
       engine.is_transition == true;
+      engine.updated_balance = false;
     }
     DrawGameState();
     DrawGameButtons();
@@ -119,6 +115,7 @@ void MyApp::DrawGameButtons() {
   }
   if (ui::Button("STAND")) {
     engine.is_transition = true;
+    engine.updated_balance = false;
   }
   ui::Button("DOUBLE");
   DrawScore();
