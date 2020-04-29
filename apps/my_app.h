@@ -25,8 +25,7 @@ class MyApp : public cinder::app::App {
   bool inGame;
   bool inRound;
   bool is_end_round;
-  std::chrono::system_clock clock;
-  std::chrono::time_point<std::chrono::system_clock> last_transition_time_;
+  
   cinder::gl::Texture2dRef background_Texture;
   cinder::gl::Texture2dRef deck_Texture;
   cinder::gl::Texture2dRef one_chip_Texture;

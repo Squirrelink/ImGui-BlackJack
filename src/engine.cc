@@ -14,6 +14,9 @@ int Engine::randomColorGenerator() {
 
 int Engine::randomValueGenerator() {
   int nr = rand() % 14 + 1;
+  if (nr == 1) {
+    nr += rand() % 12 + 1;
+  }
   return nr;
 }
 
