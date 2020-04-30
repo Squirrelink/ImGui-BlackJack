@@ -63,11 +63,7 @@ void MyApp::draw() {
     engine.RunRoundStart();
     engine.player_score = engine.EvaluateCardValue();
     engine.dealer_score = engine.EvaluateDealerCardValue();
-    if (engine.GetPlayerScore() == 21) {
-      engine.is_transition = true;
-      engine.updated_balance = false;
-    }
-    if (engine.GetPlayerScore() > 21) {
+    if (engine.GetPlayerScore() >= 21) {
       engine.is_transition = true;
       engine.updated_balance = false;
     }
@@ -117,7 +113,12 @@ void MyApp::DrawGameButtons() {
     engine.is_transition = true;
     engine.updated_balance = false;
   }
-  ui::Button("DOUBLE");
+  if (ui::Button("DOUBLE")) {
+    engine.RunPlayerHit();
+    engine.bet(engine.current_bet);
+    engine.is_transition = true;
+    engine.updated_balance = false;
+  }
   DrawScore();
 }
 
@@ -130,7 +131,6 @@ void MyApp::DrawStartGameButtons() {
   }
   DrawBetButtons();
 }
-
 
 void MyApp::DrawPlayerCards() {
   size_t row = 0;
