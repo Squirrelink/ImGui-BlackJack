@@ -34,11 +34,14 @@
 - Added gameflow button where player goes over 21 by hitting
 - fixed bug where player Ace and 10 value card didn't equal blackjack
 
-**4/29/30** Implemented Game flow
+**4/29/2020** Implemented Game flow
 - Added full implementation for gameflow with an Evaluation Method
   and transition state.
 - found and fixed the crashing bug which was from RNG generating a value that
   didn't exist in asset folder.
 - Added Dealer AI to run for the dealer hit if losing and/or under 17 points
 
+**4/30/2020** Added More Game Features
+- Fixed evaluations to correctly handle the order of the scoring process
+- Added functionality to the double button to double the bet and run a single hit
 ---
