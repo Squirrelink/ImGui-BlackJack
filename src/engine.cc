@@ -169,6 +169,7 @@ void Engine::RunDealerHit() {
     dealer_score = EvaluateDealerCardValue();
   }
 }
+
 int Engine::GetPlayerScore() { 
   return player_score;
 }
