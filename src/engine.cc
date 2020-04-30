@@ -96,6 +96,12 @@ int Engine::EvaluateCardValue() {
 }
 
 int Engine::EvaluateRound() {
+  if (player_score > 21) {
+    if (updated_balance == false) {
+      updated_balance = true;
+    }
+    return 2;
+  }
   RunDealerHit();
   if (dealer_score > 21) {
     if (updated_balance == false) {
@@ -104,16 +110,16 @@ int Engine::EvaluateRound() {
     }
     return 1;
   }
-  if (player_score < dealer_score || player_score > 21 || dealer_score == 21) {
-    updated_balance = true;
-    return 2;
-  }
   if (player_score > dealer_score || player_score == 21) {
     if (updated_balance == false) {
       balance += (2 * current_bet);
       updated_balance = true;
     }
     return 1;
+  }
+  if (player_score < dealer_score || dealer_score == 21) {
+    updated_balance = true;
+    return 2;
   }
   if (player_score == dealer_score) {
     if (updated_balance == false) {
@@ -133,8 +139,8 @@ void Engine::ResetRound() {
   inRound = false;
   player_cards.clear();
   dealer_cards.clear();
-  
 }
+
 int Engine::EvaluateDealerCardValue() {
   int total_score = 0;
   std::vector<int> ace_position;
