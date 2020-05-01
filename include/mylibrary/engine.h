@@ -24,6 +24,7 @@ class Engine {
   bool inGame;
   bool inRound;
   bool is_transition;
+  bool is_end_game;
   bool updated_balance;
   int EvaluateRound();
   int GetPlayerScore();
@@ -39,6 +40,7 @@ class Engine {
   int EvaluateCardValue();
   int EvaluateDealerCardValue();
   void ResetRound();
+  void ResetGame();
 };
 
   

@@ -42,11 +42,33 @@ void Engine::RunRoundStart() {
 }
 
 Engine::card Engine::DealCards() {
+  bool is_unique = true;
   card dealt_card;
   dealt_card.value = randomValueGenerator();
   dealt_card.color = randomColorGenerator();
-  dealt_cards.push_back(dealt_card);
-  return dealt_card;
+  
+  if (dealt_cards.empty()) {
+    dealt_cards.push_back(dealt_card);
+    return dealt_card;
+  } else {
+    for (int i = 0; i < dealt_cards.size(); i++) {
+      if (dealt_cards[i].value == dealt_card.value 
+          && dealt_cards[i].color == dealt_card.color) {
+        is_unique = false;
+      }
+    }
+    
+    if (!is_unique) {
+      DealCards();
+    } else {
+      dealt_cards.push_back(dealt_card);
+      return dealt_card;
+    }
+    
+  }
+  
+ 
+  
 }
 
 void Engine::bet(int value) {
@@ -179,5 +201,11 @@ void Engine::RunDealerHit() {
 
 int Engine::GetPlayerScore() { 
   return player_score;
+}
+void Engine::ResetGame() {
+  ResetRound();
+  balance = 1000;
+  inMenu = true;
+  is_end_game = false;
 }
 }  // namespace mylibrary

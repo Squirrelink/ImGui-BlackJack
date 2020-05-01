@@ -22,11 +22,7 @@ class MyApp : public cinder::app::App {
   void MenuButton();
   void LoadImages();
   void LoadSounds();
-  bool inMenu;
-  bool isBetting;
-  bool inGame;
-  bool inRound;
-  bool is_end_round;
+  
   
   cinder::gl::Texture2dRef background_Texture;
   cinder::gl::Texture2dRef deck_Texture;
@@ -51,6 +47,7 @@ class MyApp : public cinder::app::App {
   void DrawDealerCards();
   void DrawInitialDealerCards();
   void DrawPlayerLose();
+  void DrawGameOver();
   ci::audio::VoiceRef mVoice;
   ci::audio::VoiceRef shuffel_sound;
   ci::audio::VoiceRef single_shuffel_sound;

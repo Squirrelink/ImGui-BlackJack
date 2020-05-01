@@ -24,6 +24,7 @@ void MyApp::setup() {
   engine.inRound = false;
   engine.is_transition = false;
   engine.updated_balance = true;
+  engine.is_end_game = false;
   LoadImages();
   LoadSounds();
   srand(time(0));
@@ -78,6 +79,9 @@ void MyApp::draw() {
     DrawPlayerCards();
     DrawInitialDealerCards();
   }
+  if (engine.is_end_game) {
+    DrawGameOver();
+  }
   ImGui::End();
 }
 
@@ -129,7 +133,16 @@ void MyApp::DrawGameButtons() {
     engine.is_transition = true;
     engine.updated_balance = false;
   }
+  if (ui::Button("Exit")) {
+    single_shuffel_sound->start();
+    engine.inGame = false;
+    engine.isBetting = false;
+    engine.is_transition = false;
+    engine.is_end_game = true;
+    mVoice->stop();
+  }
   DrawScore();
+  
 }
 
 void MyApp::DrawStartGameButtons() {
@@ -141,6 +154,14 @@ void MyApp::DrawStartGameButtons() {
     }
   }
   DrawBetButtons();
+  if (ui::Button("Exit")) {
+    single_shuffel_sound->start();
+    engine.inGame = false;
+    engine.isBetting = false;
+    engine.is_transition = false;
+    engine.is_end_game = true;
+    mVoice->stop();
+  }
 }
 
 void MyApp::DrawPlayerCards() {
@@ -216,7 +237,7 @@ void MyApp::DrawNewRoundButton() {
 }
 
 void MyApp::DrawPlayerWin() {
-  ui::Text("You Won");
+  ui::Text("You Won!");
   std::string won_bet = "+ " + engine.BetToString(engine.current_bet);
   ui::Text(won_bet.c_str());
 }
@@ -257,6 +278,20 @@ void MyApp::LoadSounds() {
   ci::audio::SourceFileRef multiple_chip_file = ci::audio::load(
       ci::app::loadAsset( "end_round_chip.mp3"));
   multiple_chip_sound= ci::audio::Voice::create(multiple_chip_file);
+}
+void MyApp::DrawGameOver() {
+  if (engine.balance > 1000) {
+    int profit = (engine.balance - 1000);
+    std::string scoreText = "Nice, you escaped with: $" + engine.BetToString(profit);
+    ui::Text(scoreText.c_str());
+  } else {
+    int loss = (1000 - engine.balance);
+    std::string scoreText = "Loser, you lost: $" + engine.BetToString(loss);
+    ui::Text(scoreText.c_str());
+  }
+  if (ui::Button("Play Again!")) {
+    engine.ResetGame();
+  }
 }
 
 }  // namespace myapp
