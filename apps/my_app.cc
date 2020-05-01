@@ -29,11 +29,12 @@ void MyApp::setup() {
   ci::audio::SourceFileRef main_source_file = ci::audio::load(
       ci::app::loadAsset( "rawhide.mp3"));
   mVoice = ci::audio::Voice::create(main_source_file);
-  mVoice->start();
 }
 
 void MyApp::update() {
-
+  if (!mVoice->isPlaying() && engine.inGame) {
+    mVoice->start();
+  }
 }
 
 void MyApp::draw() {
@@ -87,6 +88,7 @@ void MyApp::MenuButton() {
     engine.inMenu = false;
     engine.inGame = true;
     engine.isBetting = true;
+    mVoice->start();
   }
 }
 
