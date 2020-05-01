@@ -25,30 +25,9 @@ void MyApp::setup() {
   engine.is_transition = false;
   engine.updated_balance = true;
   LoadImages();
+  LoadSounds();
   srand(time(0));
-  ci::audio::SourceFileRef main_source_file = ci::audio::load(
-      ci::app::loadAsset( "rawhide.mp3"));
-  mVoice = ci::audio::Voice::create(main_source_file);
   
-  ci::audio::SourceFileRef shuffle_file = ci::audio::load(
-      ci::app::loadAsset( "shuffle.mp3"));
-  shuffel_sound= ci::audio::Voice::create(shuffle_file);
-
-  ci::audio::SourceFileRef single_shuffle_file = ci::audio::load(
-      ci::app::loadAsset( "single_shuffle.mp3"));
-  single_shuffel_sound= ci::audio::Voice::create(single_shuffle_file);
-
-  ci::audio::SourceFileRef button_file = ci::audio::load(
-      ci::app::loadAsset( "button_sound.mp3"));
-  button_sound= ci::audio::Voice::create(button_file);
-
-  ci::audio::SourceFileRef single_chip_file = ci::audio::load(
-      ci::app::loadAsset( "single_chip.mp3"));
-  single_chip_sound= ci::audio::Voice::create(single_chip_file);
-
-  ci::audio::SourceFileRef multiple_chip_file = ci::audio::load(
-      ci::app::loadAsset( "end_round_chip.mp3"));
-  multiple_chip_sound= ci::audio::Voice::create(multiple_chip_file);
 }
 
 void MyApp::update() {
@@ -222,6 +201,7 @@ void MyApp::DrawBetButtons() {
     engine.bet(engine.balance);
   }
 }
+
 void MyApp::DrawPlayerLose() {
   ui::Text("You Lost");
   std::string lost_bet = "- " + engine.BetToString(engine.current_bet);
@@ -234,6 +214,7 @@ void MyApp::DrawNewRoundButton() {
     engine.ResetRound();
   }
 }
+
 void MyApp::DrawPlayerWin() {
   ui::Text("You Won");
   std::string won_bet = "+ " + engine.BetToString(engine.current_bet);
@@ -251,6 +232,31 @@ void MyApp::DrawScore() {
 void MyApp::DrawDealerScore() {
   std::string scoreText = "Dealer Score: " + engine.BetToString(engine.dealer_score);
   ui::Text(scoreText.c_str());
+}
+void MyApp::LoadSounds() {
+  ci::audio::SourceFileRef main_source_file = ci::audio::load(
+      ci::app::loadAsset( "rawhide.mp3"));
+  mVoice = ci::audio::Voice::create(main_source_file);
+
+  ci::audio::SourceFileRef shuffle_file = ci::audio::load(
+      ci::app::loadAsset( "shuffle.mp3"));
+  shuffel_sound= ci::audio::Voice::create(shuffle_file);
+
+  ci::audio::SourceFileRef single_shuffle_file = ci::audio::load(
+      ci::app::loadAsset( "single_shuffle.mp3"));
+  single_shuffel_sound= ci::audio::Voice::create(single_shuffle_file);
+
+  ci::audio::SourceFileRef button_file = ci::audio::load(
+      ci::app::loadAsset( "button_sound.mp3"));
+  button_sound= ci::audio::Voice::create(button_file);
+
+  ci::audio::SourceFileRef single_chip_file = ci::audio::load(
+      ci::app::loadAsset( "single_chip.mp3"));
+  single_chip_sound= ci::audio::Voice::create(single_chip_file);
+
+  ci::audio::SourceFileRef multiple_chip_file = ci::audio::load(
+      ci::app::loadAsset( "end_round_chip.mp3"));
+  multiple_chip_sound= ci::audio::Voice::create(multiple_chip_file);
 }
 
 }  // namespace myapp

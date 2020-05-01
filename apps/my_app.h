@@ -21,6 +21,7 @@ class MyApp : public cinder::app::App {
   void keyDown(cinder::app::KeyEvent) override;
   void MenuButton();
   void LoadImages();
+  void LoadSounds();
   bool inMenu;
   bool isBetting;
   bool inGame;
