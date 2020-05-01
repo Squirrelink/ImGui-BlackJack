@@ -45,12 +45,6 @@ Engine::card Engine::DealCards() {
   card dealt_card;
   dealt_card.value = randomValueGenerator();
   dealt_card.color = randomColorGenerator();
-  for (int i = 0; i < dealt_cards.size(); i++) {
-    if ((dealt_cards[i].value == dealt_card.value) && (dealt_cards[i].color == dealt_card.color)) {
-      DealCards();
-      break;
-    }
-  }
   dealt_cards.push_back(dealt_card);
   return dealt_card;
 }

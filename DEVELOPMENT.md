@@ -44,4 +44,6 @@
 **4/30/2020** Added More Game Features
 - Fixed evaluations to correctly handle the order of the scoring process
 - Added functionality to the double button to double the bet and run a single hit
+- started modifying dealing functions to incoporate unique card drawing per round to
+  avoid duplicate card draws.
 ---
