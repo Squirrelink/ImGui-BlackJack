@@ -37,6 +37,10 @@ void MyApp::setup() {
   ci::audio::SourceFileRef single_shuffle_file = ci::audio::load(
       ci::app::loadAsset( "single_shuffle.mp3"));
   single_shuffel_sound= ci::audio::Voice::create(single_shuffle_file);
+
+  ci::audio::SourceFileRef button_file = ci::audio::load(
+      ci::app::loadAsset( "button_sound.mp3"));
+  button_sound= ci::audio::Voice::create(button_file);
 }
 
 void MyApp::update() {
@@ -126,6 +130,7 @@ void MyApp::DrawGameButtons() {
     single_shuffel_sound->start();
   }
   if (ui::Button("STAND")) {
+    button_sound->start();
     engine.is_transition = true;
     engine.updated_balance = false;
   }
@@ -211,6 +216,7 @@ void MyApp::DrawPlayerLose() {
 
 void MyApp::DrawNewRoundButton() {
   if (ui::Button("New Round")) {
+    button_sound->start();
     engine.ResetRound();
   }
 }

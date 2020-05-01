@@ -53,6 +53,7 @@ class MyApp : public cinder::app::App {
   ci::audio::VoiceRef mVoice;
   ci::audio::VoiceRef shuffel_sound;
   ci::audio::VoiceRef single_shuffel_sound;
+  ci::audio::VoiceRef button_sound;
   cinder::gl::Texture2dRef GetCardTexture(int value, int color);
 };
 
