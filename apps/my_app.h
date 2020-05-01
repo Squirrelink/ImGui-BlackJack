@@ -7,6 +7,7 @@
 #include <cinder/gl/Shader.h>
 #include <cinder/gl/Texture.h>
 #include <mylibrary/engine.h>
+#include "cinder/audio/Voice.h"
 #include <chrono>
 
 namespace myapp {
@@ -49,6 +50,7 @@ class MyApp : public cinder::app::App {
   void DrawDealerCards();
   void DrawInitialDealerCards();
   void DrawPlayerLose();
+  ci::audio::VoiceRef mVoice;
   cinder::gl::Texture2dRef GetCardTexture(int value, int color);
 };
 

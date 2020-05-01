@@ -7,6 +7,7 @@
 #include <cinder/gl/Texture.h>
 #include <cinder/gl/wrapper.h>
 #include <cinder/gl/draw.h>
+#include "cinder/audio/Voice.h"
 #include <chrono>
 #include "CinderImGui.h"
 
@@ -25,6 +26,10 @@ void MyApp::setup() {
   engine.updated_balance = true;
   LoadImages();
   srand(time(0));
+  ci::audio::SourceFileRef main_source_file = ci::audio::load(
+      ci::app::loadAsset( "rawhide.mp3"));
+  mVoice = ci::audio::Voice::create(main_source_file);
+  mVoice->start();
 }
 
 void MyApp::update() {
