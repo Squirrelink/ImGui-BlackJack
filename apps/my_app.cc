@@ -33,6 +33,10 @@ void MyApp::setup() {
   ci::audio::SourceFileRef shuffle_file = ci::audio::load(
       ci::app::loadAsset( "shuffle.mp3"));
   shuffel_sound= ci::audio::Voice::create(shuffle_file);
+
+  ci::audio::SourceFileRef single_shuffle_file = ci::audio::load(
+      ci::app::loadAsset( "single_shuffle.mp3"));
+  single_shuffel_sound= ci::audio::Voice::create(single_shuffle_file);
 }
 
 void MyApp::update() {
@@ -119,16 +123,19 @@ void MyApp::DrawGameState() {
 void MyApp::DrawGameButtons() {
   if (ui::Button("HIT")) {
     engine.RunPlayerHit();
+    single_shuffel_sound->start();
   }
   if (ui::Button("STAND")) {
     engine.is_transition = true;
     engine.updated_balance = false;
   }
   if (ui::Button("DOUBLE")) {
+    single_shuffel_sound->start();
     engine.RunPlayerHit();
     engine.bet(engine.current_bet);
     engine.is_transition = true;
     engine.updated_balance = false;
+    
   }
   DrawScore();
 }
