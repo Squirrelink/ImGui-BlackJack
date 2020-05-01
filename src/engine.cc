@@ -48,6 +48,7 @@ Engine::card Engine::DealCards() {
   for (int i = 0; i < dealt_cards.size(); i++) {
     if ((dealt_cards[i].value == dealt_card.value) && (dealt_cards[i].color == dealt_card.color)) {
       DealCards();
+      break;
     }
   }
   dealt_cards.push_back(dealt_card);
@@ -144,6 +145,7 @@ void Engine::ResetRound() {
   inRound = false;
   player_cards.clear();
   dealer_cards.clear();
+  dealt_cards.clear();
 }
 
 int Engine::EvaluateDealerCardValue() {
