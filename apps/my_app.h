@@ -51,6 +51,7 @@ class MyApp : public cinder::app::App {
   void DrawInitialDealerCards();
   void DrawPlayerLose();
   ci::audio::VoiceRef mVoice;
+  ci::audio::VoiceRef shuffel_sound;
   cinder::gl::Texture2dRef GetCardTexture(int value, int color);
 };
 

@@ -29,6 +29,10 @@ void MyApp::setup() {
   ci::audio::SourceFileRef main_source_file = ci::audio::load(
       ci::app::loadAsset( "rawhide.mp3"));
   mVoice = ci::audio::Voice::create(main_source_file);
+  
+  ci::audio::SourceFileRef shuffle_file = ci::audio::load(
+      ci::app::loadAsset( "shuffle.mp3"));
+  shuffel_sound= ci::audio::Voice::create(shuffle_file);
 }
 
 void MyApp::update() {
@@ -134,6 +138,7 @@ void MyApp::DrawStartGameButtons() {
     if (engine.current_bet > 0) {
       engine.isBetting = false;
       engine.inRound = true;
+      shuffel_sound->start();
     }
   }
   DrawBetButtons();
