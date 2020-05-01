@@ -41,6 +41,14 @@ void MyApp::setup() {
   ci::audio::SourceFileRef button_file = ci::audio::load(
       ci::app::loadAsset( "button_sound.mp3"));
   button_sound= ci::audio::Voice::create(button_file);
+
+  ci::audio::SourceFileRef single_chip_file = ci::audio::load(
+      ci::app::loadAsset( "single_chip.mp3"));
+  single_chip_sound= ci::audio::Voice::create(single_chip_file);
+
+  ci::audio::SourceFileRef multiple_chip_file = ci::audio::load(
+      ci::app::loadAsset( "end_round_chip.mp3"));
+  multiple_chip_sound= ci::audio::Voice::create(multiple_chip_file);
 }
 
 void MyApp::update() {
@@ -82,6 +90,7 @@ void MyApp::draw() {
     engine.player_score = engine.EvaluateCardValue();
     engine.dealer_score = engine.EvaluateDealerCardValue();
     if (engine.GetPlayerScore() >= 21) {
+      multiple_chip_sound->start();
       engine.is_transition = true;
       engine.updated_balance = false;
     }
@@ -130,7 +139,7 @@ void MyApp::DrawGameButtons() {
     single_shuffel_sound->start();
   }
   if (ui::Button("STAND")) {
-    button_sound->start();
+    multiple_chip_sound->start();
     engine.is_transition = true;
     engine.updated_balance = false;
   }
@@ -140,7 +149,6 @@ void MyApp::DrawGameButtons() {
     engine.bet(engine.current_bet);
     engine.is_transition = true;
     engine.updated_balance = false;
-    
   }
   DrawScore();
 }
@@ -190,21 +198,27 @@ cinder::gl::Texture2dRef MyApp::GetCardTexture(int value, int color) {
 }
 void MyApp::DrawBetButtons() {
   if (ui::Button("Reset Bet")) {
+    button_sound->start();
     engine.ResetBalance();
   }
   if (ui::ImageButton(one_chip_Texture,one_chip_Texture->getSize())) {
+    single_chip_sound->start();
     engine.bet(1);
   }
   if (ui::ImageButton(ten_chip_Texture,ten_chip_Texture->getSize())) {
+    single_chip_sound->start();
     engine.bet(10);
   }
   if (ui::ImageButton(hundred_chip_Texture,hundred_chip_Texture->getSize())) {
+    single_chip_sound->start();
     engine.bet(100);
   }
   if (ui::ImageButton(thousand_chip_Texture,thousand_chip_Texture->getSize())) {
+    single_chip_sound->start();
     engine.bet(1000);
   }
   if (ui::ImageButton(max_chip_Texture,max_chip_Texture->getSize())) {
+    single_chip_sound->start();
     engine.bet(engine.balance);
   }
 }
