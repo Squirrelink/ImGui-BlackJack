@@ -59,7 +59,7 @@ Engine::card Engine::DealCards() {
     }
     
     if (!is_unique) {
-      DealCards();
+      return DealCards();
     } else {
       dealt_cards.push_back(dealt_card);
       return dealt_card;
