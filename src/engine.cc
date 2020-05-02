@@ -185,13 +185,12 @@ void Engine::ResetRound() {
   dealt_cards.clear();
 }
 
-
 /**
  * Dealer AI run on player stand
  */
 void Engine::RunDealerHit() {
   while (dealer_cards.size() < 5 && dealer_score < 17 
-    && dealer_score < player_score) {
+    && dealer_score <= player_score) {
     card card = DealCards();
     dealer_cards.push_back(card);
     dealer_score = EvaluateCardValue(false);
