@@ -8,13 +8,21 @@
 
 namespace mylibrary {
 class Engine {
- public:
-  
+ private:
   struct card
   {
     int color, value;
   };
-  std::vector<card> player_cards, dealer_cards, dealt_cards;
+  std::vector<card> dealt_cards;
+  bool IsUniqueCard(card card);
+  void ReturnPayouts();
+  void ReturnTiePayout();
+  void RunDealerHit();
+  card DealCards();
+  int randomValueGenerator();
+  int randomColorGenerator();
+ public:
+  std::vector<card> player_cards, dealer_cards;
   int player_score = 0;
   int dealer_score = 0;
   int balance = 1000;
@@ -29,20 +37,13 @@ class Engine {
   int EvaluateRound();
   int GetPlayerScore();
   std::string BetToString(int value);
-  int randomValueGenerator();
-  int randomColorGenerator();
   void RunRoundStart();
   void RunPlayerHit();
-  void RunDealerHit();
-  card DealCards();
   void bet(int value);
   void ResetBalance();
   int EvaluateCardValue(bool);
   void ResetRound();
   void ResetGame();
-  void ReturnPayouts();
-  void ReturnTiePayout();
-  bool IsUniqueCard(card card);
 };
 
   
