@@ -15,8 +15,11 @@ namespace myapp {
 
 using cinder::app::KeyEvent;
 
-MyApp::MyApp() { }
+MyApp::MyApp() = default;
 
+/**
+ * sets startup game state, and loads sounds/images.
+ */
 void MyApp::setup() {
   ImGui::initialize();
   engine.inMenu = true;
@@ -25,7 +28,7 @@ void MyApp::setup() {
   engine.is_transition = false;
   engine.updated_balance = true;
   engine.is_end_game = false;
-  srand(time(0));
+  srand(time(nullptr));
   LoadImages();
   LoadSounds();
 }
@@ -39,6 +42,9 @@ void MyApp::update() {
   }
 }
 
+/**
+ * draws the engine's gamestate
+ */
 void MyApp::draw() {
   cinder::gl::clear();
   ImGui::Begin("Menu");
@@ -65,6 +71,7 @@ void MyApp::draw() {
 
 
 void MyApp::keyDown(KeyEvent event) { }
+
 void MyApp::MenuButton() {
   if (ui::Button( "Start Game" )) {
     engine.inMenu = false;
@@ -74,6 +81,20 @@ void MyApp::MenuButton() {
   }
 }
 
+void MyApp::DrawExitButton() {
+  if (ui::Button("Exit")) {
+    single_shuffel_sound->start();
+    engine.inGame = false;
+    engine.isBetting = false;
+    engine.is_transition = false;
+    engine.is_end_game = true;
+    mVoice->stop();
+  }
+}
+
+/**
+ * Loads all images needed for game for startup
+ */
 void MyApp::LoadImages() {
   background_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "background.jpg" )));
   deck_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "deck.png" )));
@@ -85,6 +106,9 @@ void MyApp::LoadImages() {
   card_back_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "cardBack.png" )));
 }
 
+/**
+ * Draws player gamestate
+ */
 void MyApp::DrawGameState() {
   cinder::gl::draw(background_Texture);
   cinder::gl::draw(deck_Texture);
@@ -93,7 +117,9 @@ void MyApp::DrawGameState() {
   ui::Text("%s", balText.c_str());
   ui::Text("%s", betText.c_str());
 }
-
+/**
+ * Draws In Round buttons
+ */
 void MyApp::DrawGameButtons() {
   if (ui::Button("HIT")) {
     engine.RunPlayerHit();
@@ -115,6 +141,9 @@ void MyApp::DrawGameButtons() {
   DrawScore();
 }
 
+/**
+ * Draws start of round buttons
+ */
 void MyApp::DrawStartGameButtons() {
   if (ui::Button("Place Bet")) {
     if (engine.current_bet > 0) {
@@ -135,7 +164,9 @@ void MyApp::DrawPlayerCards() {
     cinder::gl::draw(GetCardTexture(player_card.value,player_card.color), locp);
   }
 }
-
+/**
+ * draws all dealer cards when revealing round evaluation
+ */
 void MyApp::DrawDealerCards() {
   size_t row = 0;
   const cinder::vec2 center = getWindowCenter();
@@ -145,6 +176,9 @@ void MyApp::DrawDealerCards() {
   }
 }
 
+/**
+ * draws one shown and one hidden dealer card before player stands
+ */
 void MyApp::DrawInitialDealerCards() {
   size_t row = 0;
   const cinder::vec2 center = getWindowCenter();
@@ -154,6 +188,11 @@ void MyApp::DrawInitialDealerCards() {
   cinder::gl::draw(GetCardTexture(engine.dealer_cards[0].value,engine.dealer_cards[0].color), locp_two);
 }
 
+/**
+ * @param value int received from random rank generation
+ * @param color int received from random color generation
+ * @return card texture for randomly generated card
+ */
 cinder::gl::Texture2dRef MyApp::GetCardTexture(int value, int color) {
   cinder::gl::Texture2dRef card_texture;
   card_texture = cinder::gl::Texture2d::create( loadImage( loadAsset( engine.BetToString(value) + "_" + engine.BetToString(color) + ".png")));
@@ -191,7 +230,9 @@ void MyApp::DrawPlayerLose() {
   std::string lost_bet = "- " + engine.BetToString(engine.current_bet);
   ui::Text("%s", lost_bet.c_str());
 }
-
+/**
+ * Button to reset round
+ */
 void MyApp::DrawNewRoundButton() {
   if (ui::Button("New Round")) {
     button_sound->start();
@@ -292,15 +333,6 @@ void MyApp::DrawEndGameText() {
   }
   ui::Text("%s", end_game_text.c_str());
 }
-void MyApp::DrawExitButton() {
-  if (ui::Button("Exit")) {
-    single_shuffel_sound->start();
-    engine.inGame = false;
-    engine.isBetting = false;
-    engine.is_transition = false;
-    engine.is_end_game = true;
-    mVoice->stop();
-  }
-}
+
 
 }  // namespace myapp
