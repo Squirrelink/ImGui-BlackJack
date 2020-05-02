@@ -39,7 +39,7 @@ class MyApp : public cinder::app::App {
   void DrawStartGameButtons();
   void DrawNewRoundButton();
   void DrawPlayerWin();
-  void DrawTie();
+  static void DrawTie();
   void DrawScore();
   void DrawDealerScore();
   mylibrary::Engine engine;

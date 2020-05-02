@@ -112,8 +112,8 @@ void MyApp::DrawGameState() {
   cinder::gl::draw(deck_Texture);
   std::string balText = "Balance: " + engine.BetToString(engine.balance);
   std::string betText = "Current Bet: " + engine.BetToString(engine.current_bet);
-  ui::Text(balText.c_str());
-  ui::Text(betText.c_str());
+  ui::Text("%s", balText.c_str());
+  ui::Text("%s", betText.c_str());
 }
 
 void MyApp::DrawGameButtons() {
@@ -167,18 +167,18 @@ void MyApp::DrawStartGameButtons() {
 void MyApp::DrawPlayerCards() {
   size_t row = 0;
   const cinder::vec2 center = getWindowCenter();
-  for (int i = 0; i < engine.player_cards.size(); i++) {
+  for (auto & player_card : engine.player_cards) {
     const cinder::vec2 locp = {center.x, center.y + (++row) * 70};
-    cinder::gl::draw(GetCardTexture(engine.player_cards[i].value,engine.player_cards[i].color), locp);
+    cinder::gl::draw(GetCardTexture(player_card.value,player_card.color), locp);
   }
 }
 
 void MyApp::DrawDealerCards() {
   size_t row = 0;
   const cinder::vec2 center = getWindowCenter();
-  for (int i = 0; i < engine.dealer_cards.size(); i++) {
+  for (auto & dealer_card : engine.dealer_cards) {
     const cinder::vec2 locp = {300, 10 +(++row) * 70};
-    cinder::gl::draw(GetCardTexture(engine.dealer_cards[i].value,engine.dealer_cards[i].color), locp);
+    cinder::gl::draw(GetCardTexture(dealer_card.value,dealer_card.color), locp);
   }
 }
 
@@ -226,7 +226,7 @@ void MyApp::DrawBetButtons() {
 void MyApp::DrawPlayerLose() {
   ui::Text("You Lost");
   std::string lost_bet = "- " + engine.BetToString(engine.current_bet);
-  ui::Text(lost_bet.c_str());
+  ui::Text("%s", lost_bet.c_str());
 }
 
 void MyApp::DrawNewRoundButton() {
@@ -239,18 +239,18 @@ void MyApp::DrawNewRoundButton() {
 void MyApp::DrawPlayerWin() {
   ui::Text("You Won!");
   std::string won_bet = "+ " + engine.BetToString(engine.current_bet);
-  ui::Text(won_bet.c_str());
+  ui::Text("%s", won_bet.c_str());
 }
 void MyApp::DrawTie() {
   ui::Text("Tie! No Winner");
 }
 void MyApp::DrawScore() {
   std::string scoreText = "Current Score: " + engine.BetToString(engine.player_score);
-  ui::Text(scoreText.c_str());
+  ui::Text("%s", scoreText.c_str());
 }
 void MyApp::DrawDealerScore() {
   std::string scoreText = "Dealer Score: " + engine.BetToString(engine.dealer_score);
-  ui::Text(scoreText.c_str());
+  ui::Text("%s", scoreText.c_str());
 }
 void MyApp::LoadSounds() {
   ci::audio::SourceFileRef main_source_file = ci::audio::load(
@@ -281,11 +281,11 @@ void MyApp::DrawGameOver() {
   if (engine.balance > 1000) {
     int profit = (engine.balance - 1000);
     std::string scoreText = "Nice, you escaped with: $" + engine.BetToString(profit);
-    ui::Text(scoreText.c_str());
+    ui::Text("%s", scoreText.c_str());
   } else {
     int loss = (1000 - engine.balance);
     std::string scoreText = "Loser, you lost: $" + engine.BetToString(loss);
-    ui::Text(scoreText.c_str());
+    ui::Text("%s", scoreText.c_str());
   }
   if (ui::Button("Play Again!")) {
     engine.ResetGame();
