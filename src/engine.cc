@@ -100,17 +100,25 @@ void Engine::RunPlayerHit() {
   }
 }
 
-int Engine::EvaluateCardValue() {
+
+int Engine::EvaluateCardValue(bool eval_user) {
   int total_score = 0;
   std::vector<int> ace_position;
-  for (int i = 0; i < player_cards.size(); i++) {
-    if (player_cards[i].value <= 10) {
-      total_score += player_cards[i].value;
+  std::vector<card> card_hand;
+  if (eval_user) {
+    card_hand = player_cards;
+  } else {
+    card_hand = dealer_cards;
+  }
+  
+  for (int i = 0; i < card_hand.size(); i++) {
+    if (card_hand[i].value <= 10) {
+      total_score += card_hand[i].value;
     }
-    if (player_cards[i].value > 10 && player_cards[i].value < 14) {
+    if (card_hand[i].value > 10 && card_hand[i].value < 14) {
       total_score += 10;
     }
-    if (player_cards[i].value == 14) {
+    if (card_hand[i].value == 14) {
       ace_position.push_back(i);
     }
   }
@@ -177,33 +185,6 @@ void Engine::ResetRound() {
   dealt_cards.clear();
 }
 
-int Engine::EvaluateDealerCardValue() {
-  int total_score = 0;
-  std::vector<int> ace_position;
-  for (int i = 0; i < dealer_cards.size(); i++) {
-    if (dealer_cards[i].value <= 10) {
-      total_score += dealer_cards[i].value;
-    }
-    if (dealer_cards[i].value > 10 && dealer_cards[i].value < 14) {
-      total_score += 10;
-    }
-    if (dealer_cards[i].value == 14) {
-      ace_position.push_back(i);
-    }
-  }
-  //checks for ace value after other cards have been evaluated
-  for (int i = 0; i < ace_position.size(); i++) {
-    int check_ace = total_score;
-    check_ace += 11;
-    if (check_ace > 21) {
-      total_score += 1;
-    } else {
-      total_score += 11;
-    }
-  }
-  return total_score;
-}
-
 
 /**
  * Dealer AI run on player stand
@@ -213,7 +194,7 @@ void Engine::RunDealerHit() {
     && dealer_score < player_score) {
     card card = DealCards();
     dealer_cards.push_back(card);
-    dealer_score = EvaluateDealerCardValue();
+    dealer_score = EvaluateCardValue(false);
   }
 }
 
@@ -247,5 +228,6 @@ bool Engine::IsUniqueCard(Engine::card card) {
   }
   return is_unique;
 }
+
 }
   // namespace mylibrary

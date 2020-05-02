@@ -37,8 +37,7 @@ class Engine {
   card DealCards();
   void bet(int value);
   void ResetBalance();
-  int EvaluateCardValue();
-  int EvaluateDealerCardValue();
+  int EvaluateCardValue(bool);
   void ResetRound();
   void ResetGame();
   bool IsUniqueCard(card card);

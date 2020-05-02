@@ -315,8 +315,8 @@ void MyApp::DrawRoundGUI() {
 }
 void MyApp::UpdateScore() {
   engine.RunRoundStart();
-  engine.player_score = engine.EvaluateCardValue();
-  engine.dealer_score = engine.EvaluateDealerCardValue();
+  engine.player_score = engine.EvaluateCardValue(true);
+  engine.dealer_score = engine.EvaluateCardValue(false);
   if (engine.GetPlayerScore() >= 21) {
     multiple_chip_sound->start();
     engine.is_transition = true;
