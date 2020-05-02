@@ -40,6 +40,8 @@ class Engine {
   int EvaluateCardValue(bool);
   void ResetRound();
   void ResetGame();
+  void ReturnPayouts();
+  void ReturnTiePayout();
   bool IsUniqueCard(card card);
 };
 

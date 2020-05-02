@@ -71,6 +71,25 @@ Engine::card Engine::DealCards() {
 }
 
 /**
+ * Checks if card has already been dealt during the round.
+ * @param card attempting to be dealt
+ * @return true if card hasn't already been dealt
+ */
+bool Engine::IsUniqueCard(Engine::card card) {
+  bool is_unique = true;
+  if (dealt_cards.empty()) {
+    return true;
+  }
+  for (int i = 0; i < dealt_cards.size(); i++) {
+    if (dealt_cards[i].value == card.value &&
+        dealt_cards[i].color == card.color) {
+      is_unique = false;
+    }
+  }
+  return is_unique;
+}
+
+/**
  * adds bet value to players current bet
  * @param value of bet
  */
@@ -110,7 +129,6 @@ int Engine::EvaluateCardValue(bool eval_user) {
   } else {
     card_hand = dealer_cards;
   }
-  
   for (int i = 0; i < card_hand.size(); i++) {
     if (card_hand[i].value <= 10) {
       total_score += card_hand[i].value;
@@ -137,24 +155,16 @@ int Engine::EvaluateCardValue(bool eval_user) {
 
 int Engine::EvaluateRound() {
   if (player_score > 21) {
-    if (updated_balance == false) {
-      updated_balance = true;
-    }
+    updated_balance = true;
     return 2;
   }
   RunDealerHit();
   if (dealer_score > 21) {
-    if (updated_balance == false) {
-      balance += (2*current_bet);
-      updated_balance = true;
-    }
+    ReturnPayouts();
     return 1;
   }
   if (player_score > dealer_score || player_score == 21) {
-    if (updated_balance == false) {
-      balance += (2 * current_bet);
-      updated_balance = true;
-    }
+    ReturnPayouts();
     return 1;
   }
   if (player_score < dealer_score || dealer_score == 21) {
@@ -162,10 +172,7 @@ int Engine::EvaluateRound() {
     return 2;
   }
   if (player_score == dealer_score) {
-    if (updated_balance == false) {
-      balance += current_bet;
-      updated_balance = true;
-    }
+    ReturnTiePayout();
     return 3;
   }
 }
@@ -200,6 +207,7 @@ void Engine::RunDealerHit() {
 int Engine::GetPlayerScore() { 
   return player_score;
 }
+
 /**
  * resets game on player Exit and Play Again
  */
@@ -209,24 +217,18 @@ void Engine::ResetGame() {
   inMenu = true;
   is_end_game = false;
 }
-/**
- * Checks if card has already been dealt during the round.
- * @param card attempting to be dealt
- * @return true if card hasn't already been dealt
- */
-bool Engine::IsUniqueCard(Engine::card card) {
-  bool is_unique = true;
-  if (dealt_cards.empty()) {
-    return true;
-  }
-  for (int i = 0; i < dealt_cards.size(); i++) {
-    if (dealt_cards[i].value == card.value &&
-        dealt_cards[i].color == card.color) {
-      is_unique = false;
-    }
-  }
-  return is_unique;
-}
 
+void Engine::ReturnPayouts() {
+  if (updated_balance == false) {
+    balance += (2 * current_bet);
+    updated_balance = true;
+  }
+}
+void Engine::ReturnTiePayout() {
+  if (updated_balance == false) {
+    balance += current_bet;
+    updated_balance = true;
+  }
+}
 }
   // namespace mylibrary
