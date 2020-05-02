@@ -42,32 +42,17 @@ void Engine::RunRoundStart() {
 }
 
 Engine::card Engine::DealCards() {
-  bool is_unique = true;
+  
   card dealt_card;
   dealt_card.value = randomValueGenerator();
   dealt_card.color = randomColorGenerator();
   
-  if (dealt_cards.empty()) {
-    dealt_cards.push_back(dealt_card);
-    return dealt_card;
-  } else {
-    for (int i = 0; i < dealt_cards.size(); i++) {
-      if (dealt_cards[i].value == dealt_card.value 
-          && dealt_cards[i].color == dealt_card.color) {
-        is_unique = false;
-      }
-    }
-    
-    if (!is_unique) {
+    if (!(IsUniqueCard(dealt_card))) {
       return DealCards();
     } else {
       dealt_cards.push_back(dealt_card);
       return dealt_card;
     }
-    
-  }
-  
- 
   
 }
 
@@ -208,4 +193,18 @@ void Engine::ResetGame() {
   inMenu = true;
   is_end_game = false;
 }
-}  // namespace mylibrary
+bool Engine::IsUniqueCard(Engine::card card) {
+  bool is_unique = true;
+  if (dealt_cards.empty()) {
+    return true;
+  }
+  for (int i = 0; i < dealt_cards.size(); i++) {
+    if (dealt_cards[i].value == card.value &&
+        dealt_cards[i].color == card.color) {
+      is_unique = false;
+    }
+  }
+  return is_unique;
+}
+}
+  // namespace mylibrary

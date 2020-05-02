@@ -41,6 +41,7 @@ class Engine {
   int EvaluateDealerCardValue();
   void ResetRound();
   void ResetGame();
+  bool IsUniqueCard(card card);
 };
 
   
