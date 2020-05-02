@@ -25,12 +25,14 @@ void MyApp::setup() {
   engine.is_transition = false;
   engine.updated_balance = true;
   engine.is_end_game = false;
+  srand(time(0));
   LoadImages();
   LoadSounds();
-  srand(time(0));
-  
 }
 
+/**
+ * makes music play if it stops to continue music loop
+ */
 void MyApp::update() {
   if (!mVoice->isPlaying() && engine.inGame) {
     mVoice->start();
@@ -42,21 +44,7 @@ void MyApp::draw() {
   ImGui::Begin("Menu");
   ImGui::SetWindowFontScale(1.8);
   if (engine.is_transition) {
-      if (engine.EvaluateRound() == 1) {
-        DrawPlayerWin();
-      }
-      if (engine.EvaluateRound() == 2) {
-        DrawPlayerLose();
-      }
-      if (engine.EvaluateRound() == 3) {
-        DrawTie();
-      }
-    DrawGameState();
-    DrawPlayerCards();
-    DrawNewRoundButton();
-    DrawDealerCards();
-    DrawScore();
-    DrawDealerScore();
+    DrawRoundTransition();
   }
   if (engine.inMenu) {
     MenuButton();
@@ -66,18 +54,8 @@ void MyApp::draw() {
     DrawStartGameButtons();
   }
   if (engine.inGame && engine.inRound && !engine.is_transition) {
-    engine.RunRoundStart();
-    engine.player_score = engine.EvaluateCardValue();
-    engine.dealer_score = engine.EvaluateDealerCardValue();
-    if (engine.GetPlayerScore() >= 21) {
-      multiple_chip_sound->start();
-      engine.is_transition = true;
-      engine.updated_balance = false;
-    }
-    DrawGameState();
-    DrawGameButtons();
-    DrawPlayerCards();
-    DrawInitialDealerCards();
+    UpdateScore();
+    DrawRoundGUI();
   }
   if (engine.is_end_game) {
     DrawGameOver();
@@ -133,16 +111,8 @@ void MyApp::DrawGameButtons() {
     engine.is_transition = true;
     engine.updated_balance = false;
   }
-  if (ui::Button("Exit")) {
-    single_shuffel_sound->start();
-    engine.inGame = false;
-    engine.isBetting = false;
-    engine.is_transition = false;
-    engine.is_end_game = true;
-    mVoice->stop();
-  }
+  DrawExitButton();
   DrawScore();
-  
 }
 
 void MyApp::DrawStartGameButtons() {
@@ -154,14 +124,7 @@ void MyApp::DrawStartGameButtons() {
     }
   }
   DrawBetButtons();
-  if (ui::Button("Exit")) {
-    single_shuffel_sound->start();
-    engine.inGame = false;
-    engine.isBetting = false;
-    engine.is_transition = false;
-    engine.is_end_game = true;
-    mVoice->stop();
-  }
+  DrawExitButton();
 }
 
 void MyApp::DrawPlayerCards() {
@@ -278,17 +241,65 @@ void MyApp::LoadSounds() {
   multiple_chip_sound= ci::audio::Voice::create(multiple_chip_file);
 }
 void MyApp::DrawGameOver() {
-  if (engine.balance > 1000) {
-    int profit = (engine.balance - 1000);
-    std::string scoreText = "Nice, you escaped with: $" + engine.BetToString(profit);
-    ui::Text("%s", scoreText.c_str());
-  } else {
-    int loss = (1000 - engine.balance);
-    std::string scoreText = "Loser, you lost: $" + engine.BetToString(loss);
-    ui::Text("%s", scoreText.c_str());
-  }
+  DrawEndGameText();
   if (ui::Button("Play Again!")) {
     engine.ResetGame();
+  }
+}
+void MyApp::DrawRoundResult() {
+  if (engine.EvaluateRound() == 1) {
+    DrawPlayerWin();
+  }
+  if (engine.EvaluateRound() == 2) {
+    DrawPlayerLose();
+  }
+  if (engine.EvaluateRound() == 3) {
+    DrawTie();
+  }
+}
+void MyApp::DrawRoundTransition() {
+  DrawRoundResult();
+  DrawGameState();
+  DrawPlayerCards();
+  DrawNewRoundButton();
+  DrawDealerCards();
+  DrawScore();
+  DrawDealerScore();
+}
+void MyApp::DrawRoundGUI() {
+  DrawGameState();
+  DrawGameButtons();
+  DrawPlayerCards();
+  DrawInitialDealerCards();
+}
+void MyApp::UpdateScore() {
+  engine.RunRoundStart();
+  engine.player_score = engine.EvaluateCardValue();
+  engine.dealer_score = engine.EvaluateDealerCardValue();
+  if (engine.GetPlayerScore() >= 21) {
+    multiple_chip_sound->start();
+    engine.is_transition = true;
+    engine.updated_balance = false;
+  }
+}
+void MyApp::DrawEndGameText() {
+  int profit = (engine.balance - 1000);
+  std::string end_game_text;
+  if (engine.balance >= 1000) {
+    end_game_text = "Nice, you escaped with: $" + engine.BetToString(profit);
+  } else {
+    end_game_text = "Loser, you lost: $" + engine.BetToString(profit);
+  }
+  ui::Text("%s", end_game_text.c_str());
+}
+void MyApp::DrawExitButton() {
+  if (ui::Button("Exit")) {
+    single_shuffel_sound->start();
+    engine.inGame = false;
+    engine.isBetting = false;
+    engine.is_transition = false;
+    engine.is_end_game = true;
+    mVoice->stop();
   }
 }
 

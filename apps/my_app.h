@@ -48,6 +48,12 @@ class MyApp : public cinder::app::App {
   void DrawInitialDealerCards();
   void DrawPlayerLose();
   void DrawGameOver();
+  void DrawRoundResult();
+  void DrawRoundTransition();
+  void DrawRoundGUI();
+  void UpdateScore();
+  void DrawEndGameText();
+  void DrawExitButton();
   ci::audio::VoiceRef mVoice;
   ci::audio::VoiceRef shuffel_sound;
   ci::audio::VoiceRef single_shuffel_sound;

@@ -28,6 +28,11 @@ int Engine::randomValueGenerator() {
   return nr;
 }
 
+/**
+ * turns int values to strings
+ * @param value to be turned to string
+ * @return string of inputted value
+ */
 std::string Engine::BetToString(int value) {
   std::stringstream ss;
   ss << value;
@@ -49,6 +54,10 @@ void Engine::RunRoundStart() {
   }
 }
 
+/**
+ * Generates a random unique card recursively
+ * @return a random card
+ */
 Engine::card Engine::DealCards() {
   card dealt_card;
   dealt_card.value = randomValueGenerator();
@@ -61,6 +70,10 @@ Engine::card Engine::DealCards() {
   }
 }
 
+/**
+ * adds bet value to players current bet
+ * @param value of bet
+ */
 void Engine::bet(int value) {
   if (value > balance) {
     return;
@@ -68,10 +81,17 @@ void Engine::bet(int value) {
   current_bet += value;
   balance -= value;
 }
+
+/**
+ * Resets balance for end of round payouts
+ */
 void Engine::ResetBalance() {
   balance += current_bet;
   current_bet = 0;
 }
+/**
+ * Generates a new card and adds card value to player score
+ */
 void Engine::RunPlayerHit() {
   if (player_cards.size() < 5 && player_score < 21) {
     card card = DealCards();
@@ -142,6 +162,9 @@ int Engine::EvaluateRound() {
   }
 }
 
+/**
+ * Resets round variables to to begin a new round in betting stage
+ */
 void Engine::ResetRound() {
   player_score = 0;
   dealer_score = 0;
