@@ -46,4 +46,17 @@
 - Added functionality to the double button to double the bet and run a single hit
 - started modifying dealing functions to incoporate unique card drawing per round to
   avoid duplicate card draws.
+  
+**5/1/2020** Added Sounds and Unique Card functionality
+- Added sounds to button presses along with in game music
+- Added recursive functionality to dealing cards to make sure 
+  each card generated hasn't already been played during the round.
+- Added an end game screen to allow for a full game loop. End game
+  screen tells player their losses or profits before allowing to play again.
+ 
+**5/2/2020** Improved Design
+- Seperated repetetive code into helper functions
+- Added private section for engine and myApp
+- Made setters and getters for engine variables
+
 ---
