@@ -119,7 +119,11 @@ void Engine::RunPlayerHit() {
   }
 }
 
-
+/**
+ * Evaluates all cards not an ace before adding ace value to total
+ * @param eval_user true if user cards to evaluate, false for dealer cards
+ * @return evaluated hand score
+ */
 int Engine::EvaluateCardValue(bool eval_user) {
   int total_score = 0;
   std::vector<int> ace_position;
@@ -153,6 +157,10 @@ int Engine::EvaluateCardValue(bool eval_user) {
   return total_score;
 }
 
+/**
+ * Evaluates round information to determine a round winner
+ * @return 1 for user win, 2 for player lose, 3 for tie.
+ */
 int Engine::EvaluateRound() {
   if (player_score > 21) {
     updated_balance = true;
