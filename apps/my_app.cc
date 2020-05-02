@@ -243,8 +243,6 @@ void MyApp::DrawPlayerWin() {
 }
 void MyApp::DrawTie() {
   ui::Text("Tie! No Winner");
-  std::string tie_bet = "+ " + engine.BetToString(engine.current_bet);
-  ui::Text(tie_bet.c_str());
 }
 void MyApp::DrawScore() {
   std::string scoreText = "Current Score: " + engine.BetToString(engine.player_score);

@@ -7,11 +7,19 @@
 
 namespace mylibrary {
 
+/**
+ * Generates random number for color of card dealing
+ * @return random number from 1-4 inclusive
+ */
 int Engine::randomColorGenerator() {
   int nr = rand() % 4 + 1;
   return nr;
 }
 
+/**
+ * Generates random number for Rank of card dealing
+ * @return random number 2-14 inclusive
+ */
 int Engine::randomValueGenerator() {
   int nr = rand() % 14 + 1;
   if (nr == 1) {
@@ -42,18 +50,15 @@ void Engine::RunRoundStart() {
 }
 
 Engine::card Engine::DealCards() {
-  
   card dealt_card;
   dealt_card.value = randomValueGenerator();
   dealt_card.color = randomColorGenerator();
-  
-    if (!(IsUniqueCard(dealt_card))) {
-      return DealCards();
-    } else {
-      dealt_cards.push_back(dealt_card);
-      return dealt_card;
-    }
-  
+  if (!(IsUniqueCard(dealt_card))) {
+    return DealCards();
+  } else {
+    dealt_cards.push_back(dealt_card);
+    return dealt_card;
+  }
 }
 
 void Engine::bet(int value) {
@@ -176,8 +181,13 @@ int Engine::EvaluateDealerCardValue() {
   return total_score;
 }
 
+
+/**
+ * Dealer AI run on player stand
+ */
 void Engine::RunDealerHit() {
-  while (dealer_cards.size() < 5 && dealer_score < 17 && dealer_score < player_score) {
+  while (dealer_cards.size() < 5 && dealer_score < 17 
+    && dealer_score < player_score) {
     card card = DealCards();
     dealer_cards.push_back(card);
     dealer_score = EvaluateDealerCardValue();
@@ -187,12 +197,20 @@ void Engine::RunDealerHit() {
 int Engine::GetPlayerScore() { 
   return player_score;
 }
+/**
+ * resets game on player Exit and Play Again
+ */
 void Engine::ResetGame() {
   ResetRound();
   balance = 1000;
   inMenu = true;
   is_end_game = false;
 }
+/**
+ * Checks if card has already been dealt during the round.
+ * @param card attempting to be dealt
+ * @return true if card hasn't already been dealt
+ */
 bool Engine::IsUniqueCard(Engine::card card) {
   bool is_unique = true;
   if (dealt_cards.empty()) {
