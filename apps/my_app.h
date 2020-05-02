@@ -53,20 +53,13 @@ class MyApp : public cinder::app::App {
   cinder::gl::Texture2dRef ten_chip_Texture;
   cinder::gl::Texture2dRef max_chip_Texture;
   cinder::gl::Texture2dRef card_back_Texture;
- public:
-  MyApp();
   void setup() override;
   void update() override;
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
-  
-  
-  
-  
-  
-  
+ public:
+  MyApp();
 };
-
 }  // namespace myapp
 
 #endif  // FINALPROJECT_APPS_MYAPP_H_
