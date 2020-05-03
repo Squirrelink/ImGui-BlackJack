@@ -41,7 +41,7 @@ class MyApp : public cinder::app::App {
   void UpdateScore();
   void DrawEndGameText();
   void DrawExitButton();
-  void MenuButton();
+  void DrawMenuButton();
   void LoadImages();
   void LoadSounds();
   ci::audio::VoiceRef main_song;

@@ -52,7 +52,7 @@ void MyApp::draw() {
     DrawRoundTransition();
   }
   if (engine.in_menu) {
-    MenuButton();
+    DrawMenuButton();
   }
   if (engine.in_game && engine.is_betting) {
     DrawGameState();
@@ -68,7 +68,7 @@ void MyApp::draw() {
   ImGui::End();
 }
 
-void MyApp::MenuButton() {
+void MyApp::DrawMenuButton() {
   if (ui::Button( "Start Game" )) {
     engine.in_menu = false;
     engine.in_game = true;
@@ -113,6 +113,7 @@ void MyApp::DrawGameState() {
   ui::Text("%s", bal_text.c_str());
   ui::Text("%s", bet_text.c_str());
 }
+
 /**
  * Draws In Round buttons
  */
@@ -195,6 +196,7 @@ cinder::gl::Texture2dRef MyApp::GetCardTexture(int value, int color) {
   card_texture = cinder::gl::Texture2d::create( loadImage( loadAsset( engine.BetToString(value) + "_" + engine.BetToString(color) + ".png")));
   return card_texture;
 }
+
 void MyApp::DrawBetButtons() {
   if (ui::Button("Reset Bet")) {
     button_sound->start();
@@ -227,6 +229,7 @@ void MyApp::DrawPlayerLose() {
   std::string lost_bet = "- " + engine.BetToString(engine.GetCurrentBet());
   ui::Text("%s", lost_bet.c_str());
 }
+
 /**
  * Button to reset round
  */
@@ -242,17 +245,21 @@ void MyApp::DrawPlayerWin() {
   std::string won_bet = "+ " + engine.BetToString(engine.GetCurrentBet());
   ui::Text("%s", won_bet.c_str());
 }
+
 void MyApp::DrawTie() {
   ui::Text("Tie! No Winner");
 }
+
 void MyApp::DrawScore() {
   std::string score_text = "Current Score: " + engine.BetToString(engine.GetPlayerScore());
   ui::Text("%s", score_text.c_str());
 }
+
 void MyApp::DrawDealerScore() {
   std::string score_text = "Dealer Score: " + engine.BetToString(engine.GetDealerScore());
   ui::Text("%s", score_text.c_str());
 }
+
 void MyApp::LoadSounds() {
   ci::audio::SourceFileRef main_source_file = ci::audio::load(
       ci::app::loadAsset( "rawhide.mp3"));
@@ -278,12 +285,14 @@ void MyApp::LoadSounds() {
       ci::app::loadAsset( "end_round_chip.mp3"));
   multiple_chip_sound= ci::audio::Voice::create(multiple_chip_file);
 }
+
 void MyApp::DrawGameOver() {
   DrawEndGameText();
   if (ui::Button("Play Again!")) {
     engine.ResetGame();
   }
 }
+
 void MyApp::DrawRoundResult() {
   if (engine.EvaluateRound() == kPlayerWin) {
     DrawPlayerWin();
@@ -295,6 +304,7 @@ void MyApp::DrawRoundResult() {
     DrawTie();
   }
 }
+
 void MyApp::DrawRoundTransition() {
   DrawRoundResult();
   DrawGameState();
@@ -304,12 +314,14 @@ void MyApp::DrawRoundTransition() {
   DrawScore();
   DrawDealerScore();
 }
+
 void MyApp::DrawRoundGUI() {
   DrawGameState();
   DrawGameButtons();
   DrawPlayerCards();
   DrawInitialDealerCards();
 }
+
 void MyApp::UpdateScore() {
   engine.RunRoundStart();
   engine.SetPlayerScore(engine.EvaluateCardValue(true));
@@ -320,6 +332,7 @@ void MyApp::UpdateScore() {
     engine.updated_balance = false;
   }
 }
+
 void MyApp::DrawEndGameText() {
   int profit = (engine.GetBalance() - kStartBalance);
   std::string end_game_text;
