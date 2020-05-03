@@ -95,3 +95,52 @@ TEST_CASE("Evaluate Card Hand Test", "[engine][evaluate_card]") {
   engine.player_cards[2].value = 3;
   REQUIRE(engine.EvaluateCardValue(true) == 18);
 }
+
+TEST_CASE("Simple Evaluate Round Player Win Test", "[engine][evaluate_round][player_win]") {
+  mylibrary::Engine engine;
+  engine.SetPlayerScore(19);
+  engine.SetDealerScore(18);
+  REQUIRE(engine.EvaluateRound() == 1);
+}
+TEST_CASE("Simple Evaluate Round Player Lose Test", "[engine][evaluate_round][player_lose]") {
+  mylibrary::Engine engine;
+  engine.SetPlayerScore(17);
+  engine.SetDealerScore(20);
+  REQUIRE(engine.EvaluateRound() == 2);
+}
+TEST_CASE("Simple Evaluate Round Player Tie Test", "[engine][evaluate_round][player_tie]") {
+  mylibrary::Engine engine;
+  engine.SetPlayerScore(17);
+  engine.SetDealerScore(17);
+  REQUIRE(engine.EvaluateRound() == 3);
+}
+TEST_CASE("Simple Evaluate Round Player Blackjack", "[engine][evaluate_round][player_win]") {
+  mylibrary::Engine engine;
+  engine.SetPlayerScore(21);
+  engine.SetDealerScore(18);
+  REQUIRE(engine.EvaluateRound() == 1);
+}
+TEST_CASE("Simple Evaluate Round Player Tie Blackjack", "[engine][evaluate_round][player_win]") {
+  mylibrary::Engine engine;
+  engine.SetPlayerScore(21);
+  engine.SetDealerScore(21);
+  REQUIRE(engine.EvaluateRound() == 1);
+}
+TEST_CASE("Simple Evaluate Round Dealer Blackjack", "[engine][evaluate_round][player_lose]") {
+  mylibrary::Engine engine;
+  engine.SetPlayerScore(20);
+  engine.SetDealerScore(21);
+  REQUIRE(engine.EvaluateRound() == 2);
+}
+TEST_CASE("Simple Evaluate Round Player Bust", "[engine][evaluate_round][player_lose]") {
+  mylibrary::Engine engine;
+  engine.SetPlayerScore(24);
+  engine.SetDealerScore(21);
+  REQUIRE(engine.EvaluateRound() == 2);
+}
+TEST_CASE("Simple Evaluate Round Dealer Bust", "[engine][evaluate_round][player_win]") {
+  mylibrary::Engine engine;
+  engine.SetPlayerScore(20);
+  engine.SetDealerScore(24);
+  REQUIRE(engine.EvaluateRound() == 1);
+}
