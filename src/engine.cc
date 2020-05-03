@@ -112,7 +112,7 @@ void Engine::ResetBalance() {
  * Generates a new card and adds card value to player score
  */
 void Engine::RunPlayerHit() {
-  if (player_cards.size() < 5 && player_score < 21) {
+  if (player_cards.size() < kMaxCards && player_score < kBlackjack) {
     card card = DealCards();
     player_score += card.value;
     player_cards.push_back(card);
@@ -134,24 +134,24 @@ int Engine::EvaluateCardValue(bool eval_user) {
     card_hand = dealer_cards;
   }
   for (int i = 0; i < card_hand.size(); i++) {
-    if (card_hand[i].value <= 10) {
+    if (card_hand[i].value <= kRoyalCard) {
       total_score += card_hand[i].value;
     }
-    if (card_hand[i].value > 10 && card_hand[i].value < 14) {
-      total_score += 10;
+    if (card_hand[i].value > kRoyalCard && card_hand[i].value < kAceCard) {
+      total_score += kRoyalCard;
     }
-    if (card_hand[i].value == 14) {
+    if (card_hand[i].value == kAceCard) {
       ace_position.push_back(i);
     }
   }
   //checks for ace value after checking regular card values
   for (int i = 0; i < ace_position.size(); i++) {
     int check_ace = total_score;
-    check_ace += 11;
-    if (check_ace > 21) {
+    check_ace += kAceValue;
+    if (check_ace > kBlackjack) {
       total_score += 1;
     } else {
-      total_score += 11;
+      total_score += kAceValue;
     }
   }
   return total_score;
@@ -162,26 +162,26 @@ int Engine::EvaluateCardValue(bool eval_user) {
  * @return 1 for user win, 2 for player lose, 3 for tie.
  */
 int Engine::EvaluateRound() {
-  if (player_score > 21) {
+  if (player_score > kBlackjack) {
     updated_balance = true;
-    return 2;
+    return kPlayerLose;
   }
   RunDealerHit();
-  if (dealer_score > 21) {
+  if (dealer_score > kBlackjack) {
     ReturnPayouts();
-    return 1;
+    return kPlayerWin;
   }
-  if (player_score > dealer_score || player_score == 21) {
+  if (player_score > dealer_score || player_score == kBlackjack) {
     ReturnPayouts();
-    return 1;
+    return kPlayerWin;
   }
-  if (player_score < dealer_score || dealer_score == 21) {
+  if (player_score < dealer_score || dealer_score == kBlackjack) {
     updated_balance = true;
-    return 2;
+    return kPlayerLose;
   }
   if (player_score == dealer_score) {
     ReturnTiePayout();
-    return 3;
+    return kPlayerTie;
   }
 }
 
@@ -204,7 +204,7 @@ void Engine::ResetRound() {
  * Dealer AI run on player stand
  */
 void Engine::RunDealerHit() {
-  while (dealer_cards.size() < 5 && dealer_score < 17 
+  while (dealer_cards.size() < kMaxCards && dealer_score < kDealStand 
     && dealer_score <= player_score) {
     card card = DealCards();
     dealer_cards.push_back(card);
@@ -219,7 +219,7 @@ void Engine::RunDealerHit() {
  */
 void Engine::ResetGame() {
   ResetRound();
-  balance = 1000;
+  balance = kStartBalance;
   inMenu = true;
   is_end_game = false;
 }

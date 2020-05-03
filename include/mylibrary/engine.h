@@ -7,6 +7,16 @@
 #include <cinder/gl/Texture.h>
 
 namespace mylibrary {
+const int kBlackjack = 21;
+const int kPlayerWin = 1;
+const int kPlayerLose = 2;
+const int kPlayerTie = 3;
+const int kMaxCards = 5;
+const int kDealStand = 17;
+const int kStartBalance = 1000;
+const int kAceCard = 14;
+const int kRoyalCard = 10;
+const int kAceValue = 11;
 class Engine {
  private:
   struct card
@@ -14,6 +24,10 @@ class Engine {
     int color, value;
   };
   std::vector<card> dealt_cards;
+  int player_score = 0;
+  int dealer_score = 0;
+  int balance = kStartBalance;
+  int current_bet = 0;
   bool IsUniqueCard(card card);
   void ReturnPayouts();
   void ReturnTiePayout();
@@ -23,10 +37,6 @@ class Engine {
   int randomColorGenerator();
  public:
   std::vector<card> player_cards, dealer_cards;
-  int player_score = 0;
-  int dealer_score = 0;
-  int balance = 1000;
-  int current_bet = 0;
   bool inMenu;
   bool isBetting;
   bool inGame;
