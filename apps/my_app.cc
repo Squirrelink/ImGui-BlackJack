@@ -108,10 +108,10 @@ void MyApp::LoadImages() {
 void MyApp::DrawGameState() {
   cinder::gl::draw(background_Texture);
   cinder::gl::draw(deck_Texture);
-  std::string balText = "Balance: " + engine.BetToString(engine.GetBalance());
-  std::string betText = "Current Bet: " + engine.BetToString(engine.GetCurrentBet());
-  ui::Text("%s", balText.c_str());
-  ui::Text("%s", betText.c_str());
+  std::string bal_text = "Balance: " + engine.BetToString(engine.GetBalance());
+  std::string bet_text = "Current Bet: " + engine.BetToString(engine.GetCurrentBet());
+  ui::Text("%s", bal_text.c_str());
+  ui::Text("%s", bet_text.c_str());
 }
 /**
  * Draws In Round buttons
@@ -246,12 +246,12 @@ void MyApp::DrawTie() {
   ui::Text("Tie! No Winner");
 }
 void MyApp::DrawScore() {
-  std::string scoreText = "Current Score: " + engine.BetToString(engine.GetPlayerScore());
-  ui::Text("%s", scoreText.c_str());
+  std::string score_text = "Current Score: " + engine.BetToString(engine.GetPlayerScore());
+  ui::Text("%s", score_text.c_str());
 }
 void MyApp::DrawDealerScore() {
-  std::string scoreText = "Dealer Score: " + engine.BetToString(engine.GetDealerScore());
-  ui::Text("%s", scoreText.c_str());
+  std::string score_text = "Dealer Score: " + engine.BetToString(engine.GetDealerScore());
+  ui::Text("%s", score_text.c_str());
 }
 void MyApp::LoadSounds() {
   ci::audio::SourceFileRef main_source_file = ci::audio::load(
