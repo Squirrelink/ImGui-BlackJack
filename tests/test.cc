@@ -187,3 +187,27 @@ TEST_CASE("Run Player Hit Test Edge Player Blackjack", "[engine][run_player_hit]
   engine.RunPlayerHit();
   REQUIRE(engine.player_cards.size() == 2);
 }
+TEST_CASE("Reset Game Test", "[engine][run_player_hit][edge]") {
+  mylibrary::Engine engine;
+  engine.RunPlayerHit();
+  engine.RunPlayerHit();
+  REQUIRE(engine.player_cards.size() == 2);
+  engine.SetPlayerScore(21);
+  engine.SetDealerScore(13);
+  engine.Bet(100);
+  engine.in_menu = false;
+  engine.is_end_game = true;
+  REQUIRE(engine.GetPlayerScore() == 21);
+  REQUIRE(engine.GetDealerScore() == 13);
+  REQUIRE(engine.GetCurrentBet() == 100);
+  REQUIRE(engine.GetBalance() == 900);
+  engine.ResetGame();
+  REQUIRE(engine.player_cards.size() == 0);
+  REQUIRE(engine.GetPlayerScore() == 0);
+  REQUIRE(engine.GetDealerScore() == 0);
+  REQUIRE(engine.GetCurrentBet() == 0);
+  REQUIRE(engine.GetBalance() == 1000);
+  REQUIRE(engine.in_menu);
+  REQUIRE(!engine.is_end_game);
+  
+}
