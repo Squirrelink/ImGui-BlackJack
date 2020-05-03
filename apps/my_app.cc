@@ -288,13 +288,13 @@ void MyApp::DrawGameOver() {
   }
 }
 void MyApp::DrawRoundResult() {
-  if (engine.EvaluateRound() == 1) {
+  if (engine.EvaluateRound() == kPlayerWin) {
     DrawPlayerWin();
   }
-  if (engine.EvaluateRound() == 2) {
+  if (engine.EvaluateRound() == kPlayerLose) {
     DrawPlayerLose();
   }
-  if (engine.EvaluateRound() == 3) {
+  if (engine.EvaluateRound() == kPlayerTie) {
     DrawTie();
   }
 }
@@ -317,16 +317,16 @@ void MyApp::UpdateScore() {
   engine.RunRoundStart();
   engine.SetPlayerScore(engine.EvaluateCardValue(true));
   engine.SetDealerScore(engine.EvaluateCardValue(false));
-  if (engine.GetPlayerScore() >= 21) {
+  if (engine.GetPlayerScore() >= kBlackjack) {
     multiple_chip_sound->start();
     engine.is_transition = true;
     engine.updated_balance = false;
   }
 }
 void MyApp::DrawEndGameText() {
-  int profit = (engine.GetBalance() - 1000);
+  int profit = (engine.GetBalance() - kStartBalance);
   std::string end_game_text;
-  if (engine.GetBalance() >= 1000) {
+  if (engine.GetBalance() >= kStartBalance) {
     end_game_text = "Nice, you escaped with: $" + engine.BetToString(profit);
   } else {
     end_game_text = "Loser, you lost: $" + engine.BetToString(profit);

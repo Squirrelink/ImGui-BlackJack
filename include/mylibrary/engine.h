@@ -17,6 +17,7 @@ const int kStartBalance = 1000;
 const int kAceCard = 14;
 const int kRoyalCard = 10;
 const int kAceValue = 11;
+
 class Engine {
  private:
   struct card

@@ -11,6 +11,11 @@
 #include <chrono>
 
 namespace myapp {
+const int kBlackjack = 21;
+const int kPlayerWin = 1;
+const int kPlayerLose = 2;
+const int kPlayerTie = 3;
+const int kStartBalance = 1000;
 
 class MyApp : public cinder::app::App {
  private:
