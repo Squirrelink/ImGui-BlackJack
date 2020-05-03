@@ -39,6 +39,9 @@ std::string Engine::BetToString(int value) {
   return ss.str();
 }
 
+/**
+ * Distributes two cards each to dealer and player
+ */
 void Engine::RunRoundStart() {
   if (player_cards.empty()) {
     card card1 = DealCards();
@@ -224,18 +227,25 @@ void Engine::ResetGame() {
   is_end_game = false;
 }
 
+/**
+ * Gives player double their current bet to balance
+ */
 void Engine::ReturnPayouts() {
   if (updated_balance == false) {
     balance += (2 * current_bet);
     updated_balance = true;
   }
 }
+/**
+ * Returns current bet to player balance
+ */
 void Engine::ReturnTiePayout() {
   if (updated_balance == false) {
     balance += current_bet;
     updated_balance = true;
   }
 }
+
 //Setters and Getters
 int Engine::GetPlayerScore() {
   return player_score;

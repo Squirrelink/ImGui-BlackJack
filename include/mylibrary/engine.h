@@ -36,6 +36,7 @@ class Engine {
   card DealCards();
   int randomValueGenerator();
   int randomColorGenerator();
+  
  public:
   std::vector<card> player_cards, dealer_cards;
   bool inMenu;
@@ -54,7 +55,6 @@ class Engine {
   int EvaluateCardValue(bool);
   void ResetRound();
   void ResetGame();
-  
   //Setters and Getters
   int GetPlayerScore();
   void SetPlayerScore(int score);

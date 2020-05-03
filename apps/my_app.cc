@@ -37,8 +37,8 @@ void MyApp::setup() {
  * makes music play if it stops to continue music loop
  */
 void MyApp::update() {
-  if (!mVoice->isPlaying() && engine.inGame) {
-    mVoice->start();
+  if (!main_song->isPlaying() && engine.inGame) {
+    main_song->start();
   }
 }
 
@@ -69,15 +69,12 @@ void MyApp::draw() {
   ImGui::End();
 }
 
-
-void MyApp::keyDown(KeyEvent event) { }
-
 void MyApp::MenuButton() {
   if (ui::Button( "Start Game" )) {
     engine.inMenu = false;
     engine.inGame = true;
     engine.isBetting = true;
-    mVoice->start();
+    main_song->start();
   }
 }
 
@@ -88,7 +85,7 @@ void MyApp::DrawExitButton() {
     engine.isBetting = false;
     engine.is_transition = false;
     engine.is_end_game = true;
-    mVoice->stop();
+    main_song->stop();
   }
 }
 
@@ -164,6 +161,7 @@ void MyApp::DrawPlayerCards() {
     cinder::gl::draw(GetCardTexture(player_card.value,player_card.color), locp);
   }
 }
+
 /**
  * draws all dealer cards when revealing round evaluation
  */
@@ -259,7 +257,7 @@ void MyApp::DrawDealerScore() {
 void MyApp::LoadSounds() {
   ci::audio::SourceFileRef main_source_file = ci::audio::load(
       ci::app::loadAsset( "rawhide.mp3"));
-  mVoice = ci::audio::Voice::create(main_source_file);
+  main_song = ci::audio::Voice::create(main_source_file);
 
   ci::audio::SourceFileRef shuffle_file = ci::audio::load(
       ci::app::loadAsset( "shuffle.mp3"));
