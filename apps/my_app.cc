@@ -92,14 +92,24 @@ void MyApp::DrawExitButton() {
  * Loads all images needed for game for startup
  */
 void MyApp::LoadImages() {
-  background_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "background.jpg" )));
-  deck_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "deck.png" )));
-  one_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "1.png" )));
-  ten_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "10.png" )));
-  hundred_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "100.png" )));
-  thousand_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "1000.png" )));
-  max_chip_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "max.png" )));
-  card_back_Texture = cinder::gl::Texture2d::create( loadImage( loadAsset( "cardBack.png" )));
+  background_Texture = cinder::gl::Texture2d::create( 
+      loadImage( 
+          loadAsset( "background.jpg" )));
+  deck_Texture = cinder::gl::Texture2d::create( 
+      loadImage( loadAsset( "deck.png" )));
+  one_chip_Texture = cinder::gl::Texture2d::create( 
+      loadImage( loadAsset( "1.png" )));
+  ten_chip_Texture = cinder::gl::Texture2d::create( 
+      loadImage( loadAsset( "10.png" )));
+  hundred_chip_Texture = cinder::gl::Texture2d::create( 
+      loadImage( loadAsset( "100.png" )));
+  thousand_chip_Texture = cinder::gl::Texture2d::create( 
+      loadImage( loadAsset( "1000.png" )));
+  max_chip_Texture = cinder::gl::Texture2d::create( 
+      loadImage( loadAsset( "max.png" )));
+  card_back_Texture = cinder::gl::Texture2d::create( 
+      loadImage( 
+          loadAsset( "cardBack.png" )));
 }
 
 /**
@@ -108,8 +118,10 @@ void MyApp::LoadImages() {
 void MyApp::DrawGameState() {
   cinder::gl::draw(background_Texture);
   cinder::gl::draw(deck_Texture);
-  std::string bal_text = "Balance: " + engine.BetToString(engine.GetBalance());
-  std::string bet_text = "Current Bet: " + engine.BetToString(engine.GetCurrentBet());
+  std::string bal_text = "Balance: "
+      + engine.BetToString(engine.GetBalance());
+  std::string bet_text = "Current Bet: " 
+      + engine.BetToString(engine.GetCurrentBet());
   ui::Text("%s", bal_text.c_str());
   ui::Text("%s", bet_text.c_str());
 }
@@ -158,7 +170,8 @@ void MyApp::DrawPlayerCards() {
   const cinder::vec2 center = getWindowCenter();
   for (auto & player_card : engine.player_cards) {
     const cinder::vec2 locp = {center.x, center.y + (++row) * 70};
-    cinder::gl::draw(GetCardTexture(player_card.value,player_card.color), locp);
+    cinder::gl::draw(GetCardTexture(player_card.value,
+        player_card.color), locp);
   }
 }
 
@@ -170,7 +183,8 @@ void MyApp::DrawDealerCards() {
   const cinder::vec2 center = getWindowCenter();
   for (auto & dealer_card : engine.dealer_cards) {
     const cinder::vec2 locp = {300, 10 +(++row) * 70};
-    cinder::gl::draw(GetCardTexture(dealer_card.value,dealer_card.color), locp);
+    cinder::gl::draw(GetCardTexture(dealer_card.value,
+        dealer_card.color), locp);
   }
 }
 
@@ -183,7 +197,8 @@ void MyApp::DrawInitialDealerCards() {
   const cinder::vec2 locp = {300, 10 +(++row) * 70};
   const cinder::vec2 locp_two = {300, 10 +(++row) * 70};
   cinder::gl::draw(card_back_Texture, locp);
-  cinder::gl::draw(GetCardTexture(engine.dealer_cards[0].value,engine.dealer_cards[0].color), locp_two);
+  cinder::gl::draw(GetCardTexture(engine.dealer_cards[0].value,
+      engine.dealer_cards[0].color), locp_two);
 }
 
 /**
@@ -193,7 +208,9 @@ void MyApp::DrawInitialDealerCards() {
  */
 cinder::gl::Texture2dRef MyApp::GetCardTexture(int value, int color) {
   cinder::gl::Texture2dRef card_texture;
-  card_texture = cinder::gl::Texture2d::create( loadImage( loadAsset( engine.BetToString(value) + "_" + engine.BetToString(color) + ".png")));
+  card_texture = cinder::gl::Texture2d::create( loadImage( 
+      loadAsset( engine.BetToString(value) + "_" + 
+      engine.BetToString(color) + ".png")));
   return card_texture;
 }
 
@@ -210,15 +227,18 @@ void MyApp::DrawBetButtons() {
     single_chip_sound->start();
     engine.Bet(10);
   }
-  if (ui::ImageButton(hundred_chip_Texture,hundred_chip_Texture->getSize())) {
+  if (ui::ImageButton(hundred_chip_Texture,
+      hundred_chip_Texture->getSize())) {
     single_chip_sound->start();
     engine.Bet(100);
   }
-  if (ui::ImageButton(thousand_chip_Texture,thousand_chip_Texture->getSize())) {
+  if (ui::ImageButton(thousand_chip_Texture,
+      thousand_chip_Texture->getSize())) {
     single_chip_sound->start();
     engine.Bet(1000);
   }
-  if (ui::ImageButton(max_chip_Texture,max_chip_Texture->getSize())) {
+  if (ui::ImageButton(max_chip_Texture,
+      max_chip_Texture->getSize())) {
     single_chip_sound->start();
     engine.Bet(engine.GetBalance());
   }
@@ -226,7 +246,8 @@ void MyApp::DrawBetButtons() {
 
 void MyApp::DrawPlayerLose() {
   ui::Text("You Lost");
-  std::string lost_bet = "- " + engine.BetToString(engine.GetCurrentBet());
+  std::string lost_bet = "- " + engine.BetToString(
+      engine.GetCurrentBet());
   ui::Text("%s", lost_bet.c_str());
 }
 
@@ -242,7 +263,8 @@ void MyApp::DrawNewRoundButton() {
 
 void MyApp::DrawPlayerWin() {
   ui::Text("You Won!");
-  std::string won_bet = "+ " + engine.BetToString(engine.GetCurrentBet());
+  std::string won_bet = "+ " + engine.BetToString(
+      engine.GetCurrentBet());
   ui::Text("%s", won_bet.c_str());
 }
 
@@ -251,12 +273,14 @@ void MyApp::DrawTie() {
 }
 
 void MyApp::DrawScore() {
-  std::string score_text = "Current Score: " + engine.BetToString(engine.GetPlayerScore());
+  std::string score_text = "Current Score: " 
+      + engine.BetToString(engine.GetPlayerScore());
   ui::Text("%s", score_text.c_str());
 }
 
 void MyApp::DrawDealerScore() {
-  std::string score_text = "Dealer Score: " + engine.BetToString(engine.GetDealerScore());
+  std::string score_text = "Dealer Score: " 
+      + engine.BetToString(engine.GetDealerScore());
   ui::Text("%s", score_text.c_str());
 }
 
