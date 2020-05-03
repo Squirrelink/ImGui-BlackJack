@@ -144,3 +144,46 @@ TEST_CASE("Simple Evaluate Round Dealer Bust", "[engine][evaluate_round][player_
   engine.SetDealerScore(24);
   REQUIRE(engine.EvaluateRound() == 1);
 }
+TEST_CASE("Run Player Hit Test", "[engine][run_player_hit]") {
+  mylibrary::Engine engine;
+  engine.RunPlayerHit();
+  REQUIRE(engine.player_cards.size() == 1);
+  engine.RunPlayerHit();
+  REQUIRE(engine.player_cards.size() == 2);
+  
+}
+TEST_CASE("Run Player Hit Test Edge 5 Cards", "[engine][run_player_hit][edge]") {
+  mylibrary::Engine engine;
+  engine.RunPlayerHit();
+  engine.SetPlayerScore(0);
+  engine.RunPlayerHit();
+  engine.SetPlayerScore(0);
+  engine.RunPlayerHit();
+  engine.SetPlayerScore(0);
+  engine.RunPlayerHit();
+  engine.SetPlayerScore(0);
+  engine.RunPlayerHit();
+  engine.SetPlayerScore(0);
+  REQUIRE(engine.player_cards.size() == 5);
+  engine.RunPlayerHit();
+  REQUIRE(engine.player_cards.size() == 5);
+}
+TEST_CASE("Run Player Hit Test Edge Player Bust", "[engine][run_player_hit][edge]") {
+  mylibrary::Engine engine;
+  engine.RunPlayerHit();
+  engine.RunPlayerHit();
+  engine.SetPlayerScore(24);
+  REQUIRE(engine.player_cards.size() == 2);
+  engine.RunPlayerHit();
+  REQUIRE(engine.player_cards.size() == 2);
+}
+
+TEST_CASE("Run Player Hit Test Edge Player Blackjack", "[engine][run_player_hit][edge]") {
+  mylibrary::Engine engine;
+  engine.RunPlayerHit();
+  engine.RunPlayerHit();
+  engine.SetPlayerScore(21);
+  REQUIRE(engine.player_cards.size() == 2);
+  engine.RunPlayerHit();
+  REQUIRE(engine.player_cards.size() == 2);
+}

@@ -37,7 +37,6 @@ class Engine {
   int RandomColorGenerator();
   card DealCards();
   
-  
  public:
   std::vector<card> player_cards, dealer_cards;
   bool in_menu;
