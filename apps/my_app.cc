@@ -112,8 +112,8 @@ void MyApp::LoadImages() {
 void MyApp::DrawGameState() {
   cinder::gl::draw(background_Texture);
   cinder::gl::draw(deck_Texture);
-  std::string balText = "Balance: " + engine.BetToString(engine.balance);
-  std::string betText = "Current Bet: " + engine.BetToString(engine.current_bet);
+  std::string balText = "Balance: " + engine.BetToString(engine.GetBalance());
+  std::string betText = "Current Bet: " + engine.BetToString(engine.GetCurrentBet());
   ui::Text("%s", balText.c_str());
   ui::Text("%s", betText.c_str());
 }
@@ -133,7 +133,7 @@ void MyApp::DrawGameButtons() {
   if (ui::Button("DOUBLE")) {
     single_shuffel_sound->start();
     engine.RunPlayerHit();
-    engine.bet(engine.current_bet);
+    engine.bet(engine.GetCurrentBet());
     engine.is_transition = true;
     engine.updated_balance = false;
   }
@@ -146,7 +146,7 @@ void MyApp::DrawGameButtons() {
  */
 void MyApp::DrawStartGameButtons() {
   if (ui::Button("Place Bet")) {
-    if (engine.current_bet > 0) {
+    if (engine.GetCurrentBet() > 0) {
       engine.isBetting = false;
       engine.inRound = true;
       shuffel_sound->start();
@@ -221,13 +221,13 @@ void MyApp::DrawBetButtons() {
   }
   if (ui::ImageButton(max_chip_Texture,max_chip_Texture->getSize())) {
     single_chip_sound->start();
-    engine.bet(engine.balance);
+    engine.bet(engine.GetBalance());
   }
 }
 
 void MyApp::DrawPlayerLose() {
   ui::Text("You Lost");
-  std::string lost_bet = "- " + engine.BetToString(engine.current_bet);
+  std::string lost_bet = "- " + engine.BetToString(engine.GetCurrentBet());
   ui::Text("%s", lost_bet.c_str());
 }
 /**
@@ -242,7 +242,7 @@ void MyApp::DrawNewRoundButton() {
 
 void MyApp::DrawPlayerWin() {
   ui::Text("You Won!");
-  std::string won_bet = "+ " + engine.BetToString(engine.current_bet);
+  std::string won_bet = "+ " + engine.BetToString(engine.GetCurrentBet());
   ui::Text("%s", won_bet.c_str());
 }
 void MyApp::DrawTie() {
@@ -253,7 +253,7 @@ void MyApp::DrawScore() {
   ui::Text("%s", scoreText.c_str());
 }
 void MyApp::DrawDealerScore() {
-  std::string scoreText = "Dealer Score: " + engine.BetToString(engine.dealer_score);
+  std::string scoreText = "Dealer Score: " + engine.BetToString(engine.GetDealerScore());
   ui::Text("%s", scoreText.c_str());
 }
 void MyApp::LoadSounds() {
@@ -324,9 +324,9 @@ void MyApp::UpdateScore() {
   }
 }
 void MyApp::DrawEndGameText() {
-  int profit = (engine.balance - 1000);
+  int profit = (engine.GetBalance() - 1000);
   std::string end_game_text;
-  if (engine.balance >= 1000) {
+  if (engine.GetBalance() >= 1000) {
     end_game_text = "Nice, you escaped with: $" + engine.BetToString(profit);
   } else {
     end_game_text = "Loser, you lost: $" + engine.BetToString(profit);

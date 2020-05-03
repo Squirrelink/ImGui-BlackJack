@@ -257,10 +257,6 @@ int Engine::GetBalance() {
   return balance;
 }
 
-void Engine::SetBalance(int set_balance) {
-  balance = set_balance;
-}
-
 int Engine::GetCurrentBet() { 
   return current_bet;
 }

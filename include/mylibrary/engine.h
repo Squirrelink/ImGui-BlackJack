@@ -35,7 +35,6 @@ class Engine {
   bool is_end_game;
   bool updated_balance;
   int EvaluateRound();
-  
   std::string BetToString(int value);
   void RunRoundStart();
   void RunPlayerHit();
@@ -51,7 +50,6 @@ class Engine {
   int GetDealerScore();
   void  SetDealerScore(int score);
   int GetBalance();
-  void SetBalance(int balance);
   int GetCurrentBet();
 };
 
