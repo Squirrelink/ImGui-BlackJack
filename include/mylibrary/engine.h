@@ -34,15 +34,15 @@ class Engine {
   void ReturnTiePayout();
   void RunDealerHit();
   card DealCards();
-  int randomValueGenerator();
-  int randomColorGenerator();
+  int RandomValueGenerator();
+  int RandomColorGenerator();
   
  public:
   std::vector<card> player_cards, dealer_cards;
-  bool inMenu;
-  bool isBetting;
-  bool inGame;
-  bool inRound;
+  bool in_menu;
+  bool is_betting;
+  bool in_game;
+  bool in_round;
   bool is_transition;
   bool is_end_game;
   bool updated_balance;
@@ -50,7 +50,7 @@ class Engine {
   std::string BetToString(int value);
   void RunRoundStart();
   void RunPlayerHit();
-  void bet(int value);
+  void Bet(int value);
   void ResetBalance();
   int EvaluateCardValue(bool);
   void ResetRound();

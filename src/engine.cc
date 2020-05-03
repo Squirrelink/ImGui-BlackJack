@@ -11,7 +11,7 @@ namespace mylibrary {
  * Generates random number for color of card dealing
  * @return random number from 1-4 inclusive
  */
-int Engine::randomColorGenerator() {
+int Engine::RandomColorGenerator() {
   int nr = rand() % 4 + 1;
   return nr;
 }
@@ -20,7 +20,7 @@ int Engine::randomColorGenerator() {
  * Generates random number for Rank of card dealing
  * @return random number 2-14 inclusive
  */
-int Engine::randomValueGenerator() {
+int Engine::RandomValueGenerator() {
   int nr = rand() % 14 + 1;
   if (nr == 1) {
     nr += rand() % 12 + 1;
@@ -63,8 +63,8 @@ void Engine::RunRoundStart() {
  */
 Engine::card Engine::DealCards() {
   card dealt_card;
-  dealt_card.value = randomValueGenerator();
-  dealt_card.color = randomColorGenerator();
+  dealt_card.value = RandomValueGenerator();
+  dealt_card.color = RandomColorGenerator();
   if (!(IsUniqueCard(dealt_card))) {
     return DealCards();
   } else {
@@ -96,7 +96,7 @@ bool Engine::IsUniqueCard(Engine::card card) {
  * adds bet value to players current bet
  * @param value of bet
  */
-void Engine::bet(int value) {
+void Engine::Bet(int value) {
   if (value > balance) {
     return;
   }
@@ -195,9 +195,9 @@ void Engine::ResetRound() {
   player_score = 0;
   dealer_score = 0;
   current_bet = 0;
-  isBetting = true;
+  is_betting = true;
   is_transition = false;
-  inRound = false;
+  in_round = false;
   player_cards.clear();
   dealer_cards.clear();
   dealt_cards.clear();
@@ -223,7 +223,7 @@ void Engine::RunDealerHit() {
 void Engine::ResetGame() {
   ResetRound();
   balance = kStartBalance;
-  inMenu = true;
+  in_menu = true;
   is_end_game = false;
 }
 

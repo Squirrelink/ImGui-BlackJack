@@ -21,9 +21,9 @@ MyApp::MyApp() = default;
  */
 void MyApp::setup() {
   ImGui::initialize();
-  engine.inMenu = true;
-  engine.inGame = false;
-  engine.inRound = false;
+  engine.in_menu = true;
+  engine.in_game = false;
+  engine.in_round = false;
   engine.is_transition = false;
   engine.updated_balance = true;
   engine.is_end_game = false;
@@ -36,7 +36,7 @@ void MyApp::setup() {
  * makes music play if it stops to continue music loop
  */
 void MyApp::update() {
-  if (!main_song->isPlaying() && engine.inGame) {
+  if (!main_song->isPlaying() && engine.in_game) {
     main_song->start();
   }
 }
@@ -51,14 +51,14 @@ void MyApp::draw() {
   if (engine.is_transition) {
     DrawRoundTransition();
   }
-  if (engine.inMenu) {
+  if (engine.in_menu) {
     MenuButton();
   }
-  if (engine.inGame && engine.isBetting) {
+  if (engine.in_game && engine.is_betting) {
     DrawGameState();
     DrawStartGameButtons();
   }
-  if (engine.inGame && engine.inRound && !engine.is_transition) {
+  if (engine.in_game && engine.in_round && !engine.is_transition) {
     UpdateScore();
     DrawRoundGUI();
   }
@@ -70,9 +70,9 @@ void MyApp::draw() {
 
 void MyApp::MenuButton() {
   if (ui::Button( "Start Game" )) {
-    engine.inMenu = false;
-    engine.inGame = true;
-    engine.isBetting = true;
+    engine.in_menu = false;
+    engine.in_game = true;
+    engine.is_betting = true;
     main_song->start();
   }
 }
@@ -80,8 +80,8 @@ void MyApp::MenuButton() {
 void MyApp::DrawExitButton() {
   if (ui::Button("Exit")) {
     single_shuffel_sound->start();
-    engine.inGame = false;
-    engine.isBetting = false;
+    engine.in_game = false;
+    engine.is_betting = false;
     engine.is_transition = false;
     engine.is_end_game = true;
     main_song->stop();
@@ -129,7 +129,7 @@ void MyApp::DrawGameButtons() {
   if (ui::Button("DOUBLE")) {
     single_shuffel_sound->start();
     engine.RunPlayerHit();
-    engine.bet(engine.GetCurrentBet());
+    engine.Bet(engine.GetCurrentBet());
     engine.is_transition = true;
     engine.updated_balance = false;
   }
@@ -143,8 +143,8 @@ void MyApp::DrawGameButtons() {
 void MyApp::DrawStartGameButtons() {
   if (ui::Button("Place Bet")) {
     if (engine.GetCurrentBet() > 0) {
-      engine.isBetting = false;
-      engine.inRound = true;
+      engine.is_betting = false;
+      engine.in_round = true;
       shuffel_sound->start();
     }
   }
@@ -202,23 +202,23 @@ void MyApp::DrawBetButtons() {
   }
   if (ui::ImageButton(one_chip_Texture,one_chip_Texture->getSize())) {
     single_chip_sound->start();
-    engine.bet(1);
+    engine.Bet(1);
   }
   if (ui::ImageButton(ten_chip_Texture,ten_chip_Texture->getSize())) {
     single_chip_sound->start();
-    engine.bet(10);
+    engine.Bet(10);
   }
   if (ui::ImageButton(hundred_chip_Texture,hundred_chip_Texture->getSize())) {
     single_chip_sound->start();
-    engine.bet(100);
+    engine.Bet(100);
   }
   if (ui::ImageButton(thousand_chip_Texture,thousand_chip_Texture->getSize())) {
     single_chip_sound->start();
-    engine.bet(1000);
+    engine.Bet(1000);
   }
   if (ui::ImageButton(max_chip_Texture,max_chip_Texture->getSize())) {
     single_chip_sound->start();
-    engine.bet(engine.GetBalance());
+    engine.Bet(engine.GetBalance());
   }
 }
 
