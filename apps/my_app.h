@@ -21,7 +21,7 @@ class MyApp : public cinder::app::App {
   void DrawStartGameButtons();
   void DrawNewRoundButton();
   void DrawPlayerWin();
-  static void DrawTie();
+  void DrawTie();
   void DrawScore();
   void DrawDealerScore();
   void DrawPlayerCards();

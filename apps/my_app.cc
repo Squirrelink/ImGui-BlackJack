@@ -249,7 +249,7 @@ void MyApp::DrawTie() {
   ui::Text("Tie! No Winner");
 }
 void MyApp::DrawScore() {
-  std::string scoreText = "Current Score: " + engine.BetToString(engine.player_score);
+  std::string scoreText = "Current Score: " + engine.BetToString(engine.GetPlayerScore());
   ui::Text("%s", scoreText.c_str());
 }
 void MyApp::DrawDealerScore() {
@@ -315,8 +315,8 @@ void MyApp::DrawRoundGUI() {
 }
 void MyApp::UpdateScore() {
   engine.RunRoundStart();
-  engine.player_score = engine.EvaluateCardValue(true);
-  engine.dealer_score = engine.EvaluateCardValue(false);
+  engine.SetPlayerScore(engine.EvaluateCardValue(true));
+  engine.SetDealerScore(engine.EvaluateCardValue(false));
   if (engine.GetPlayerScore() >= 21) {
     multiple_chip_sound->start();
     engine.is_transition = true;

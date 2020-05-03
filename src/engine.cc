@@ -212,9 +212,7 @@ void Engine::RunDealerHit() {
   }
 }
 
-int Engine::GetPlayerScore() { 
-  return player_score;
-}
+
 
 /**
  * resets game on player Exit and Play Again
@@ -237,6 +235,34 @@ void Engine::ReturnTiePayout() {
     balance += current_bet;
     updated_balance = true;
   }
+}
+//Setters and Getters
+int Engine::GetPlayerScore() {
+  return player_score;
+}
+
+void Engine::SetPlayerScore(int score) {
+  player_score = score;
+}
+
+int Engine::GetDealerScore() { 
+  return dealer_score;
+}
+
+void Engine::SetDealerScore(int score) {
+  dealer_score = score;
+}
+
+int Engine::GetBalance() { 
+  return balance;
+}
+
+void Engine::SetBalance(int set_balance) {
+  balance = set_balance;
+}
+
+int Engine::GetCurrentBet() { 
+  return current_bet;
 }
 }
   // namespace mylibrary
