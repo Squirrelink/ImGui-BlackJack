@@ -33,9 +33,10 @@ class Engine {
   void ReturnPayouts();
   void ReturnTiePayout();
   void RunDealerHit();
-  card DealCards();
   int RandomValueGenerator();
   int RandomColorGenerator();
+  card DealCards();
+  
   
  public:
   std::vector<card> player_cards, dealer_cards;
