@@ -43,7 +43,7 @@ As you start the game, you enter a casino to the lovely tunes of the Blues Broth
 
 ## Visuals
 
-
+The images of the game are drawn using Cinder, while the User Interaction menu is utilizing ImGui for game control
 <img width="752" alt="Game3" src="https://user-images.githubusercontent.com/55003777/81023493-de94da80-8e70-11ea-8914-afb1f1ac7a01.PNG">
 
 
