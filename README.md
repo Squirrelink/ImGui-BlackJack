@@ -10,7 +10,8 @@ This application is a visual game of BlackJack written in C++ using Cinder v0.9.
 
 ## Installation
 
-If using Cinder v0.9.3 ImGui is already included. Download [Cinder](https://libcinder.org/download) and make a new folder in the /my-projects directory folder of Cinder. Create the repository into the project folder to run this application. To add ImGui to Cinder, download the [Cinder Block ImGui](https://github.com/simongeilfus/Cinder-ImGui) and put it in the Cinder folders /blocks directory. 
+Note: If using Cinder v0.9.3 ImGui is already included. 
+Download [Cinder](https://libcinder.org/download) and make a new folder in the /my-projects directory folder of Cinder. Create the repository into the project folder to run this application. To add ImGui to Cinder, download the [Cinder Block ImGui](https://github.com/simongeilfus/Cinder-ImGui) and put it in the Cinder folders /blocks directory. 
 Make sure to change the CMakeLists.txt BLOCKS section to the Cinder-ImGui folder in the /blocks directory if it isn't already.
 
 ```bash
