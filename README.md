@@ -1,6 +1,6 @@
 # ImGui BlackJack
 
-This application is a visual game of BlackJack written in C++ using Cinder v0.9.2 and the [Cinder Block ImGui](https://github.com/simongeilfus/Cinder-ImGui). Use [Visual Studio 15](https://visualstudio.microsoft.com/vs/older-downloads/) for the best performance
+This application is a visual game of BlackJack written in C++ using [Cinder v0.9.2](https://libcinder.org/download) and the [Cinder Block ImGui](https://github.com/simongeilfus/Cinder-ImGui). Use [Visual Studio 15](https://visualstudio.microsoft.com/vs/older-downloads/) for the best performance
 
 ## Requirements
 - [Cinder v0.9.2 or above](https://libcinder.org/download)
