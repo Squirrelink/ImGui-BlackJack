@@ -61,7 +61,6 @@ class Engine {
   int RandomValueGenerator();
   int RandomColorGenerator();
   card DealCards();
-  
 };
 }  // namespace mylibrary
 

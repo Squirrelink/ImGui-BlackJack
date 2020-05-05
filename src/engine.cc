@@ -208,7 +208,6 @@ void Engine::ResetRound() {
   dealt_cards.clear();
 }
 
-
 /**
  * resets game on player Exit and Play Again
  */
