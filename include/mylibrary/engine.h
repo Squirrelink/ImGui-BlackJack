@@ -36,10 +36,10 @@ class Engine {
   void RunRoundStart();
   void RunPlayerHit();
   void Bet(int value);
-  void ResetBalance();
   int EvaluateCardValue(bool);
   void ResetRound();
   void ResetGame();
+  void ResetBalance();
   //Setters and Getters
   int GetPlayerScore();
   void SetPlayerScore(int score);
@@ -63,9 +63,6 @@ class Engine {
   card DealCards();
   
 };
-
-  
-
 }  // namespace mylibrary
 
 

@@ -105,25 +105,6 @@ void Engine::Bet(int value) {
 }
 
 /**
- * Resets balance for end of round payouts
- */
-void Engine::ResetBalance() {
-  balance += current_bet;
-  current_bet = 0;
-}
-
-/**
- * Generates a new card and adds card value to player score
- */
-void Engine::RunPlayerHit() {
-  if (player_cards.size() < kMaxCards && player_score < kBlackjack) {
-    card card = DealCards();
-    player_score += card.value;
-    player_cards.push_back(card);
-  }
-}
-
-/**
  * Evaluates all cards not an ace before adding ace value to total
  * @param eval_user true if user cards to evaluate, false for dealer cards
  * @return evaluated hand score
@@ -190,6 +171,29 @@ int Engine::EvaluateRound() {
 }
 
 /**
+ * Dealer AI run on player stand
+ */
+void Engine::RunDealerHit() {
+  while (dealer_cards.size() < kMaxCards && dealer_score < kDealStand 
+    && dealer_score <= player_score) {
+    card card = DealCards();
+    dealer_cards.push_back(card);
+    dealer_score = EvaluateCardValue(false);
+  }
+}
+
+/**
+ * Generates a new card and adds card value to player score
+ */
+void Engine::RunPlayerHit() {
+  if (player_cards.size() < kMaxCards && player_score < kBlackjack) {
+    card card = DealCards();
+    player_score += card.value;
+    player_cards.push_back(card);
+  }
+}
+
+/**
  * Resets round variables to to begin a new round in betting stage
  */
 void Engine::ResetRound() {
@@ -204,17 +208,6 @@ void Engine::ResetRound() {
   dealt_cards.clear();
 }
 
-/**
- * Dealer AI run on player stand
- */
-void Engine::RunDealerHit() {
-  while (dealer_cards.size() < kMaxCards && dealer_score < kDealStand 
-    && dealer_score <= player_score) {
-    card card = DealCards();
-    dealer_cards.push_back(card);
-    dealer_score = EvaluateCardValue(false);
-  }
-}
 
 /**
  * resets game on player Exit and Play Again
@@ -224,6 +217,14 @@ void Engine::ResetGame() {
   balance = kStartBalance;
   in_menu = true;
   is_end_game = false;
+}
+
+/**
+ * Resets balance for end of round payouts
+ */
+void Engine::ResetBalance() {
+  balance += current_bet;
+  current_bet = 0;
 }
 
 /**
