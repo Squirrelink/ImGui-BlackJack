@@ -59,4 +59,14 @@
 - Added private section for engine and myApp
 - Made setters and getters for engine variables
 
+**5/3/2020** Organized Code
+- Fixed naming syntax
+- Removed unused code
+- Added unit tests for public methods
+
+**5/4/2020** Readme
+- Wrote Readme for game functionality
+- Finalized design 
+
+
 ---
