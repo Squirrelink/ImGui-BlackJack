@@ -4,7 +4,7 @@ This application is a visual game of BlackJack written in C++ using Cinder v0.9.
 
 ## Requirements
 - [Cinder v0.9.2 or above](https://libcinder.org/download)
-- [Visual Studio 2015](https://visualstudio.microsoft.com/vs/older-downloads/)
+- [Visual Studio 2015+](https://visualstudio.microsoft.com/vs/older-downloads/)
 - [ImGui Cinder Block (already packaged with Cinder v0.9.3 and above)](https://github.com/simongeilfus/Cinder-ImGui)
 - [CMake](https://cmake.org/download/)
 
