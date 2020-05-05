@@ -18,6 +18,9 @@ const int kPlayerTie = 3;
 const int kStartBalance = 1000;
 
 class MyApp : public cinder::app::App {
+ public:
+  MyApp();
+
  private:
   mylibrary::Engine engine;
   cinder::gl::Texture2dRef GetCardTexture(int value, int color);
@@ -61,9 +64,6 @@ class MyApp : public cinder::app::App {
   void setup() override;
   void update() override;
   void draw() override;
-  
- public:
-  MyApp();
 };
 }  // namespace myapp
 

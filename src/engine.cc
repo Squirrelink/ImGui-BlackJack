@@ -111,6 +111,7 @@ void Engine::ResetBalance() {
   balance += current_bet;
   current_bet = 0;
 }
+
 /**
  * Generates a new card and adds card value to player score
  */
@@ -215,8 +216,6 @@ void Engine::RunDealerHit() {
   }
 }
 
-
-
 /**
  * resets game on player Exit and Play Again
  */
@@ -236,6 +235,7 @@ void Engine::ReturnPayouts() {
     updated_balance = true;
   }
 }
+
 /**
  * Returns current bet to player balance
  */

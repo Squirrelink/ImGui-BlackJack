@@ -67,6 +67,7 @@
 **5/4/2020** Readme
 - Wrote Readme for game functionality
 - Finalized design 
+- Gave appropriate access to class methods
 
 
 ---

@@ -68,6 +68,9 @@ void MyApp::draw() {
   ImGui::End();
 }
 
+/**
+ * Draws start button to enter game
+ */
 void MyApp::DrawMenuButton() {
   if (ui::Button( "Start Game" )) {
     engine.in_menu = false;
@@ -89,45 +92,7 @@ void MyApp::DrawExitButton() {
 }
 
 /**
- * Loads all images needed for game for startup
- */
-void MyApp::LoadImages() {
-  background_Texture = cinder::gl::Texture2d::create( 
-      loadImage( 
-          loadAsset( "background.jpg" )));
-  deck_Texture = cinder::gl::Texture2d::create( 
-      loadImage( loadAsset( "deck.png" )));
-  one_chip_Texture = cinder::gl::Texture2d::create( 
-      loadImage( loadAsset( "1.png" )));
-  ten_chip_Texture = cinder::gl::Texture2d::create( 
-      loadImage( loadAsset( "10.png" )));
-  hundred_chip_Texture = cinder::gl::Texture2d::create( 
-      loadImage( loadAsset( "100.png" )));
-  thousand_chip_Texture = cinder::gl::Texture2d::create( 
-      loadImage( loadAsset( "1000.png" )));
-  max_chip_Texture = cinder::gl::Texture2d::create( 
-      loadImage( loadAsset( "max.png" )));
-  card_back_Texture = cinder::gl::Texture2d::create( 
-      loadImage( 
-          loadAsset( "cardBack.png" )));
-}
-
-/**
- * Draws player gamestate
- */
-void MyApp::DrawGameState() {
-  cinder::gl::draw(background_Texture);
-  cinder::gl::draw(deck_Texture);
-  std::string bal_text = "Balance: "
-      + engine.BetToString(engine.GetBalance());
-  std::string bet_text = "Current Bet: " 
-      + engine.BetToString(engine.GetCurrentBet());
-  ui::Text("%s", bal_text.c_str());
-  ui::Text("%s", bet_text.c_str());
-}
-
-/**
- * Draws In Round buttons
+ * Draws in round buttons
  */
 void MyApp::DrawGameButtons() {
   if (ui::Button("HIT")) {
@@ -165,6 +130,53 @@ void MyApp::DrawStartGameButtons() {
   DrawExitButton();
 }
 
+void MyApp::DrawBetButtons() {
+  if (ui::Button("Reset Bet")) {
+    button_sound->start();
+    engine.ResetBalance();
+  }
+  if (ui::ImageButton(one_chip_Texture,one_chip_Texture->getSize())) {
+    single_chip_sound->start();
+    engine.Bet(1);
+  }
+  if (ui::ImageButton(ten_chip_Texture,ten_chip_Texture->getSize())) {
+    single_chip_sound->start();
+    engine.Bet(10);
+  }
+  if (ui::ImageButton(hundred_chip_Texture,
+                      hundred_chip_Texture->getSize())) {
+    single_chip_sound->start();
+    engine.Bet(100);
+  }
+  if (ui::ImageButton(thousand_chip_Texture,
+                      thousand_chip_Texture->getSize())) {
+    single_chip_sound->start();
+    engine.Bet(1000);
+  }
+  if (ui::ImageButton(max_chip_Texture,
+                      max_chip_Texture->getSize())) {
+    single_chip_sound->start();
+    engine.Bet(engine.GetBalance());
+  }
+}
+
+/**
+ * Draws player game information during round
+ */
+void MyApp::DrawGameState() {
+  cinder::gl::draw(background_Texture);
+  cinder::gl::draw(deck_Texture);
+  std::string bal_text = "Balance: "
+      + engine.BetToString(engine.GetBalance());
+  std::string bet_text = "Current Bet: " 
+      + engine.BetToString(engine.GetCurrentBet());
+  ui::Text("%s", bal_text.c_str());
+  ui::Text("%s", bet_text.c_str());
+}
+
+/**
+ * Draws cards from engine's player hand vector
+ */
 void MyApp::DrawPlayerCards() {
   size_t row = 0;
   const cinder::vec2 center = getWindowCenter();
@@ -214,41 +226,24 @@ cinder::gl::Texture2dRef MyApp::GetCardTexture(int value, int color) {
   return card_texture;
 }
 
-void MyApp::DrawBetButtons() {
-  if (ui::Button("Reset Bet")) {
-    button_sound->start();
-    engine.ResetBalance();
-  }
-  if (ui::ImageButton(one_chip_Texture,one_chip_Texture->getSize())) {
-    single_chip_sound->start();
-    engine.Bet(1);
-  }
-  if (ui::ImageButton(ten_chip_Texture,ten_chip_Texture->getSize())) {
-    single_chip_sound->start();
-    engine.Bet(10);
-  }
-  if (ui::ImageButton(hundred_chip_Texture,
-      hundred_chip_Texture->getSize())) {
-    single_chip_sound->start();
-    engine.Bet(100);
-  }
-  if (ui::ImageButton(thousand_chip_Texture,
-      thousand_chip_Texture->getSize())) {
-    single_chip_sound->start();
-    engine.Bet(1000);
-  }
-  if (ui::ImageButton(max_chip_Texture,
-      max_chip_Texture->getSize())) {
-    single_chip_sound->start();
-    engine.Bet(engine.GetBalance());
-  }
-}
-
+/**
+ * Drawn if player lost round
+ */
 void MyApp::DrawPlayerLose() {
   ui::Text("You Lost");
   std::string lost_bet = "- " + engine.BetToString(
       engine.GetCurrentBet());
   ui::Text("%s", lost_bet.c_str());
+}
+
+/**
+ * Drawn if player won round
+ */
+void MyApp::DrawPlayerWin() {
+  ui::Text("You Won!");
+  std::string won_bet = "+ " + engine.BetToString(
+      engine.GetCurrentBet());
+  ui::Text("%s", won_bet.c_str());
 }
 
 /**
@@ -261,13 +256,9 @@ void MyApp::DrawNewRoundButton() {
   }
 }
 
-void MyApp::DrawPlayerWin() {
-  ui::Text("You Won!");
-  std::string won_bet = "+ " + engine.BetToString(
-      engine.GetCurrentBet());
-  ui::Text("%s", won_bet.c_str());
-}
-
+/**
+ * Draws tie information for player tie
+ */
 void MyApp::DrawTie() {
   ui::Text("Tie! No Winner");
 }
@@ -278,12 +269,92 @@ void MyApp::DrawScore() {
   ui::Text("%s", score_text.c_str());
 }
 
+/**
+ * Draws evaluation information to screen after
+ * round has been played and evaluated
+ */
+void MyApp::DrawRoundTransition() {
+  DrawRoundResult();
+  DrawGameState();
+  DrawPlayerCards();
+  DrawNewRoundButton();
+  DrawDealerCards();
+  DrawScore();
+  DrawDealerScore();
+}
+
+/**
+ * Draws standard in round game screen for player after bet and before evaluate
+ */
+void MyApp::DrawRoundGUI() {
+  DrawGameState();
+  DrawGameButtons();
+  DrawPlayerCards();
+  DrawInitialDealerCards();
+}
+
+/**
+ * Updates player and dealer score for GUI
+ */
+void MyApp::UpdateScore() {
+  engine.RunRoundStart();
+  engine.SetPlayerScore(engine.EvaluateCardValue(true));
+  engine.SetDealerScore(engine.EvaluateCardValue(false));
+  if (engine.GetPlayerScore() >= kBlackjack) {
+    multiple_chip_sound->start();
+    engine.is_transition = true;
+    engine.updated_balance = false;
+  }
+}
+
+/**
+ * Checks player balance to determine win or lose screen on player exit
+ */
+void MyApp::DrawEndGameText() {
+  int profit = (engine.GetBalance() - kStartBalance);
+  std::string end_game_text;
+  if (engine.GetBalance() >= kStartBalance) {
+    end_game_text = "Nice, you escaped with: $" + engine.BetToString(profit);
+  } else {
+    end_game_text = "Loser, you lost: $" + engine.BetToString(profit);
+  }
+  ui::Text("%s", end_game_text.c_str());
+}
+
 void MyApp::DrawDealerScore() {
   std::string score_text = "Dealer Score: " 
       + engine.BetToString(engine.GetDealerScore());
   ui::Text("%s", score_text.c_str());
 }
 
+/**
+ * Draws End Game Screen
+ */
+void MyApp::DrawGameOver() {
+  DrawEndGameText();
+  if (ui::Button("Play Again!")) {
+    engine.ResetGame();
+  }
+}
+
+/**
+ * Uses Engine's Evaluate Round function to determine win/lose drawing
+ */
+void MyApp::DrawRoundResult() {
+  if (engine.EvaluateRound() == kPlayerWin) {
+    DrawPlayerWin();
+  }
+  if (engine.EvaluateRound() == kPlayerLose) {
+    DrawPlayerLose();
+  }
+  if (engine.EvaluateRound() == kPlayerTie) {
+    DrawTie();
+  }
+}
+
+/**
+ * Loads all sounds needed for gameplay
+ */
 void MyApp::LoadSounds() {
   ci::audio::SourceFileRef main_source_file = ci::audio::load(
       ci::app::loadAsset( "rawhide.mp3"));
@@ -310,63 +381,30 @@ void MyApp::LoadSounds() {
   multiple_chip_sound= ci::audio::Voice::create(multiple_chip_file);
 }
 
-void MyApp::DrawGameOver() {
-  DrawEndGameText();
-  if (ui::Button("Play Again!")) {
-    engine.ResetGame();
-  }
+/**
+ * Loads all images needed for game for startup
+ */
+void MyApp::LoadImages() {
+  background_Texture = cinder::gl::Texture2d::create(
+      loadImage(
+          loadAsset( "background.jpg" )));
+  deck_Texture = cinder::gl::Texture2d::create(
+      loadImage( loadAsset( "deck.png" )));
+  one_chip_Texture = cinder::gl::Texture2d::create(
+      loadImage( loadAsset( "1.png" )));
+  ten_chip_Texture = cinder::gl::Texture2d::create(
+      loadImage( loadAsset( "10.png" )));
+  hundred_chip_Texture = cinder::gl::Texture2d::create(
+      loadImage( loadAsset( "100.png" )));
+  thousand_chip_Texture = cinder::gl::Texture2d::create(
+      loadImage( loadAsset( "1000.png" )));
+  max_chip_Texture = cinder::gl::Texture2d::create(
+      loadImage( loadAsset( "max.png" )));
+  card_back_Texture = cinder::gl::Texture2d::create(
+      loadImage(
+          loadAsset( "cardBack.png" )));
 }
 
-void MyApp::DrawRoundResult() {
-  if (engine.EvaluateRound() == kPlayerWin) {
-    DrawPlayerWin();
-  }
-  if (engine.EvaluateRound() == kPlayerLose) {
-    DrawPlayerLose();
-  }
-  if (engine.EvaluateRound() == kPlayerTie) {
-    DrawTie();
-  }
-}
-
-void MyApp::DrawRoundTransition() {
-  DrawRoundResult();
-  DrawGameState();
-  DrawPlayerCards();
-  DrawNewRoundButton();
-  DrawDealerCards();
-  DrawScore();
-  DrawDealerScore();
-}
-
-void MyApp::DrawRoundGUI() {
-  DrawGameState();
-  DrawGameButtons();
-  DrawPlayerCards();
-  DrawInitialDealerCards();
-}
-
-void MyApp::UpdateScore() {
-  engine.RunRoundStart();
-  engine.SetPlayerScore(engine.EvaluateCardValue(true));
-  engine.SetDealerScore(engine.EvaluateCardValue(false));
-  if (engine.GetPlayerScore() >= kBlackjack) {
-    multiple_chip_sound->start();
-    engine.is_transition = true;
-    engine.updated_balance = false;
-  }
-}
-
-void MyApp::DrawEndGameText() {
-  int profit = (engine.GetBalance() - kStartBalance);
-  std::string end_game_text;
-  if (engine.GetBalance() >= kStartBalance) {
-    end_game_text = "Nice, you escaped with: $" + engine.BetToString(profit);
-  } else {
-    end_game_text = "Loser, you lost: $" + engine.BetToString(profit);
-  }
-  ui::Text("%s", end_game_text.c_str());
-}
 
 
 }  // namespace myapp

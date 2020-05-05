@@ -19,25 +19,10 @@ const int kRoyalCard = 10;
 const int kAceValue = 11;
 
 class Engine {
- private:
-  struct card
-  {
+ public:
+  struct card {
     int color, value;
   };
-  std::vector<card> dealt_cards;
-  int player_score = 0;
-  int dealer_score = 0;
-  int balance = kStartBalance;
-  int current_bet = 0;
-  bool IsUniqueCard(card card);
-  void ReturnPayouts();
-  void ReturnTiePayout();
-  void RunDealerHit();
-  int RandomValueGenerator();
-  int RandomColorGenerator();
-  card DealCards();
-  
- public:
   std::vector<card> player_cards, dealer_cards;
   bool in_menu;
   bool is_betting;
@@ -62,6 +47,21 @@ class Engine {
   void  SetDealerScore(int score);
   int GetBalance();
   int GetCurrentBet();
+  
+ private:
+  std::vector<card> dealt_cards;
+  int player_score = 0;
+  int dealer_score = 0;
+  int balance = kStartBalance;
+  int current_bet = 0;
+  bool IsUniqueCard(card card);
+  void ReturnPayouts();
+  void ReturnTiePayout();
+  void RunDealerHit();
+  int RandomValueGenerator();
+  int RandomColorGenerator();
+  card DealCards();
+  
 };
 
   
