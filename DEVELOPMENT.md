@@ -22,8 +22,10 @@
 - Added score counter for player
 
 **4/25/2020** Started Adding Gameflow
+- Attempted to add SQLite database for leaderboard
 - Added Timer and transition state to game engine
 - Attmpted to implement timed transition state upon user bust
+
 
 **4/27/2020** Changed Gameflow Design
 - Changed timer during transition to be a button for new round
@@ -55,7 +57,7 @@
   screen tells player their losses or profits before allowing to play again.
  
 **5/2/2020** Improved Design
-- Seperated repetetive code into helper functions
+- Separated repetetive code into helper functions
 - Added private section for engine and myApp
 - Made setters and getters for engine variables
 
